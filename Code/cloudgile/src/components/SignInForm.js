@@ -60,12 +60,14 @@ function SignInForm() {
   return (
     <div className="auth-form-wrapper">
       <Card raised>
+        <div style={{ backgroundColor: "cornflowerblue", color: 'white', padding: '10px' }}>
+          <Typography gutterBottom variant="h5" component="h2" align="center" color="inherit">CLOUDGILE SIGN IN</Typography>
+        </div>
         <CardContent>
           {user ? (
             renderLoggedIn()
           ) : (
             <section>
-                <Typography gutterBottom variant="h5" component="h2" align="center">Cloudgile Sign In</Typography>
 
                 <form onSubmit={onFormSubmit}>
                   <TextField
@@ -95,7 +97,7 @@ function SignInForm() {
 
                   <div style={{display: 'flex'}}>
                     {ErrorMessage ? <Typography color="error">{ErrorMessage}</Typography> : null}
-                    <Button color="secondary" style={{marginLeft: "auto"}}>Forgot Password?</Button>
+                    <Button color="secondary" style={{marginLeft: "auto"}}>Forgot Password? Reset!</Button>
                   </div>
 
                   <Button

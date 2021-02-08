@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { auth } from "../firebase";
 import { FcGoogle } from "react-icons/fc";
 
-import "../css/SignInForm.css";
+import "../css/SignUpForm.css";
 
 import { signInWithGoogle } from '../auth/signInWithGoogle';
 import { getCurrentUser } from "../auth";
@@ -56,7 +56,7 @@ function SignUpForm() {
 
     const onSignUpWithEmailPassword = async () => {
         try {
-            await signUp(loginEmail, passOne);
+            await signUp(loginEmail, passOne, firstName + lastName);
             history.push("/")
         } catch (e) {
             setErrorMessage(e.message);
@@ -76,89 +76,88 @@ function SignUpForm() {
  
     return (
         <div className="auth-form-wrapper">
-            <Card raised>
+            <Card raised className="auth-form-card">
+                <div style={{backgroundColor: "cornflowerblue", color: 'white', padding: '10px'}}>
+                    <Typography gutterBottom variant="h5" component="h2" align="center" color="inherit">CLOUDGILE SIGN UP</Typography>
+                </div>
                 <CardContent>
                     {user ? (
                         renderLoggedIn()
                     ) : (
                         <section>
-                            <Typography gutterBottom variant="h5" component="h2" align="center">Cloudgile Sign Up</Typography>
-
                             <form onSubmit={onFormSubmit}>
-                                <TextField
-                                    required
-                                    size="normal"
-                                    fullWidth
-                                    placeholder="First Name"
-                                    margin="normal"
-                                    name="firstName"
-                                    type="text"
-                                    value={firstName || ""}
-                                    onChange={(e) => setfirstName(e.target.value)}>
-                                </TextField>
-
-                                <TextField
-                                    required
-                                    size="normal"
-                                    fullWidth
-                                    placeholder="Last Name"
-                                    margin="normal"
-                                    name="lastName"
-                                    type="text"
-                                    value={lastName || ""}
-                                    onChange={(e) => setLastName(e.target.value)}>
-                                </TextField>
-
-                                <TextField
-                                    required
-                                    size="normal"
-                                    fullWidth
-                                    placeholder="Email Address"
-                                    margin="normal"
-                                    name="SignUpMail"
-                                    type="email"
-                                    value={loginEmail || ""}
-                                    onChange={(e) => setLoginEmail(e.target.value)}>
-                                </TextField>
-
-                                <TextField
-                                    required
-                                    size="normal"
-                                    fullWidth
-                                    className="auth-form-fields"
-                                    placeholder="New Password"
-                                    margin="normal"
-                                    name="PassOne"
-                                    type="password"
-                                    value={passOne || ""}
-                                    onChange={(e) => setPassOne(e.target.value)}>
-                                </TextField>
-
-                                <TextField
-                                    required
-                                    size="normal"
-                                    fullWidth
-                                    className="auth-form-fields"
-                                    placeholder="Confirm Password"
-                                    margin="normal"
-                                    name="PassTwo"
-                                    type="password"
-                                    value={passTwo || ""}
-                                    onChange={(e) => setPassTwo(e.target.value)}>
-                                </TextField>
-
-                                <div style={{ display: 'flex' }}>
-                                    <FormControlLabel control={
-                                            <Checkbox checked={AgreeCheck}
-                                                required
-                                                onChange={handleChange} 
-                                                name="AgreeCheck"/>
-                                                
-                                            
-                                    }
-                                    label="Agree to T&C"/>
-                                    {ErrorMessage ? <Typography color="error">{ErrorMessage}</Typography> : null}
+                                <div className="auth-form-fields">
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            placeholder="First Name"
+                                            // margin="normal"
+                                            name="firstName"
+                                            type="text"
+                                            value={firstName || ""}
+                                            onChange={(e) => setfirstName(e.target.value)}>
+                                        </TextField>
                                 </div>
+                                
+                                    <div className="auth-form-fields"><TextField
+                                        required
+                                        fullWidth
+                                        placeholder="Last Name"
+                                        // margin="normal"
+                                        name="lastName"
+                                        type="text"
+                                        value={lastName || ""}
+                                        onChange={(e) => setLastName(e.target.value)}>
+                                    </TextField></div>
+                                
+
+                                    <div className="auth-form-fields"><TextField
+                                        required
+                                        fullWidth
+                                        placeholder="Email Address"
+                                        // margin="normal"
+                                        name="SignUpMail"
+                                        type="email"
+                                        value={loginEmail || ""}
+                                        onChange={(e) => setLoginEmail(e.target.value)}>
+                                    </TextField></div>
+                                
+
+                                    <div className="auth-form-fields"><TextField
+                                        required
+                                        fullWidth
+                                        placeholder="New Password"
+                                        // margin="normal"
+                                        name="PassOne"
+                                        type="password"
+                                        value={passOne || ""}
+                                        onChange={(e) => setPassOne(e.target.value)}>
+                                    </TextField></div>
+                                
+
+                                    <div className="auth-form-fields"><TextField
+                                        required
+                                        fullWidth
+                                        placeholder="Confirm Password"
+                                        // margin="normal"
+                                        name="PassTwo"
+                                        type="password"
+                                        value={passTwo || ""}
+                                        onChange={(e) => setPassTwo(e.target.value)}>
+                                    </TextField></div>
+
+                                <FormControlLabel control={
+                                        <Checkbox checked={AgreeCheck}
+                                            required
+                                            onChange={handleChange} 
+                                            name="AgreeCheck"
+                                            color="primary"/>
+                                            
+                                        
+                                }
+                                label="Agree to T&C"/>
+
+                                <Typography color="error">{ErrorMessage}</Typography>
 
                                 <Button
                                     type="submit"
