@@ -54,7 +54,6 @@ import { mainListItems, secondaryListItems } from './listItems';
 // import Orders from './Orders';
 import Title from './Title';
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -64,12 +63,17 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
   },
-  toolbarIcon: {
+  toolbarHeading: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
+  },
+  toolbarTitle: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    ...theme.mixins.toolbarHeading
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -87,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 16,
   },
   menuButtonHidden: {
     display: 'none',
@@ -183,10 +187,15 @@ export default function Dashboard() {
         }}
         open={open}
       >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
+        <div className={classes.toolbarHeading}>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+            DASHBOARD MENU
+          </Typography>
+          <div>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
         </div>
         <Divider />
         <List>{mainListItems}</List>
