@@ -39,13 +39,13 @@ function SignInForm() {
 
   const onSignInWithGoogleClicked = async () => {
     await signInWithGoogle();
-    history.push('/');
+    history.push('/dashboard');
   }
 
   const onSignInWithEmailPassword = async () => {
     try {
       await signIn(loginEmail, loginPassword);
-      history.push("/")
+      history.push("/dashboard")
     } catch (e) {
       setErrorMessage(e.message);
     }
@@ -65,7 +65,7 @@ function SignInForm() {
         </div>
         <CardContent>
           {user ? (
-            renderLoggedIn()
+            history.push('/dashboard')
           ) : (
             <section>
 
