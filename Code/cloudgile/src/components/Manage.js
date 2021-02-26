@@ -16,7 +16,6 @@ import { Col, Row, Button, Dropdown } from '@themesberg/react-bootstrap';
 
 export const Manage = () => {
   return (
-    // <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <Dropdown>
           <Dropdown.Toggle as={Button} variant="secondary" className="text-dark me-2">
@@ -30,7 +29,6 @@ export const Manage = () => {
           </Dropdown.Menu>
         </Dropdown>
 
-        
       </div>
 
   );
