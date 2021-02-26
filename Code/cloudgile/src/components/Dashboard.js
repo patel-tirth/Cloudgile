@@ -50,6 +50,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+import { SearchBar } from './SearchBar';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 import Title from './Title';
@@ -153,9 +154,13 @@ export default function Dashboard() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
+    // <div></div>
+    
     <div className={classes.root}>
+     
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -171,8 +176,11 @@ export default function Dashboard() {
           </Typography>
   
           <Typography  color="inherit" noWrap className={classes.title}>
+          
            Welcome {getCurrentUser().email}
+           
           </Typography>
+          <SearchBar />
           <IconButton color="inherit">
             <Badge badgeContent={2} color="secondary">
               <NotificationsIcon />
