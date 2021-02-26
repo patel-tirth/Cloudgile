@@ -1,14 +1,16 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Backdrop, CircularProgress } from '@material-ui/core'
+import { BoxLoading } from 'react-loadingg';
 
 export const ProtectedRoute = ({ isAuthed, isLoading, ...props }) => {
   const inDebugMode = false;
   const inMaintainance = false;
   if (isLoading) {
-    return <Backdrop open={isLoading}>
-      <CircularProgress color="inherit" />
-    </Backdrop>;
+    // return <Backdrop open={isLoading}>
+    //   <CircularProgress color="inherit" />
+    // </Backdrop>;
+    return <div><BoxLoading/></div>
   }
 
   if (inMaintainance) {

@@ -26,7 +26,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import logo from '../img/new_user.png';
+// import logo from '../img/agile.png';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 import Title from './Title';
@@ -192,7 +192,7 @@ export const Settings = () => {
                 
              
                 <Title>Avatar</Title>
-                <div className = {classes.userPhoto}><img src={logo} alt="logo" width = "200" height = "140"/></div>
+                {/* <div className = {classes.userPhoto}><img src={logo} alt="logo" width = "200" height = "140"/></div> */}
               </Paper>
             </Grid>
             {/* Recent Deposits */}
