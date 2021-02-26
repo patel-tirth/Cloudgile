@@ -24,7 +24,7 @@ export const Manage = () => {
           </Dropdown.Toggle>
           <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-2">
             <Dropdown.Item>
-              {/* <FontAwesomeIcon icon={faFileAlt} className="me-2" /> Member */}
+              Member
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
