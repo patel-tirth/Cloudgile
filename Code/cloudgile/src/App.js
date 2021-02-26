@@ -19,9 +19,9 @@ import 'firebase/firestore'
 import Dashboard from './components/Dashboard';
 import { Profile } from './components/Profile';
 import { Settings } from './components/Settings';
+import { Manage } from './components/Manage';
 
 function App() {
-
   const { isLoading, user } = useAuth();
 
   return (
@@ -36,6 +36,9 @@ function App() {
         <ProtectedRoute path="/profile" isLoading={isLoading} isAuthed={!!user}><Profile/></ProtectedRoute>
         <ProtectedRoute path="/projects/:projectID/" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
         <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
+        <ProtectedRoute path="/manage" isLoading={isLoading} isAuthed={!!user}><Manage/></ProtectedRoute>
+        {/* <ProtectedRoute path="/projects/projectID/members" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
+        {/* <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         <ProtectedRoute path="/settings" isLoading={isLoading} isAuthed={!!user}><Settings/></ProtectedRoute>
         <ProtectedRoute path="/signOut" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
         <ProtectedRoute path="/createProject" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>

@@ -26,16 +26,19 @@ export const mainListItems = (
       <ListItemText primary="Dashboard" />
     </ListItem>
     </Link>
-    <ListItem button>
+    {/* <ListItem button> */}
+    <Link to="/manage">
+    <ListItem button> 
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Manage members" />
     </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <SearchIcon />
-      </ListItemIcon>
+      </ListItemIcon> 
       <ListItemText primary="Search Engine" />
     </ListItem>
     <Link to="/settings">
@@ -55,26 +58,3 @@ export const mainListItems = (
   </div>
 );
 
-// export const secondaryListItems = (
-//   <div>
-//     <ListSubheader inset>Saved reports</ListSubheader>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Current month" />
-//     </ListItem>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Last quarter" />
-//     </ListItem>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Year-end sale" />
-//     </ListItem>
-//   </div>
-// );

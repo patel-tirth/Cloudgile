@@ -27,6 +27,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 // import logo from '../img/agile.png';
+// import logo from '../img/new_user.png';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 import Title from './Title';
