@@ -18,14 +18,16 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
+    <Link to="/dashboard">
     <ListItem button>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-    <Link to="/manage">
-    <ListItem button> 
+    </Link>
+    <Link to ="/manage">
+    <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
@@ -35,7 +37,7 @@ export const mainListItems = (
     <ListItem button>
       <ListItemIcon>
         <SearchIcon />
-      </ListItemIcon> 
+      </ListItemIcon>
       <ListItemText primary="Search Engine" />
     </ListItem>
     <Link to="/settings">
