@@ -19,6 +19,7 @@ import Dashboard from './components/Dashboard';
 import { Profile } from './components/Profile';
 import { Settings } from './components/Settings';
 import { Manage } from './components/Manage';
+import {Cloudgileproject} from './components/Cloudgileproject';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         <ProtectedRoute path="/" exact isLoading={isLoading} isAuthed={!!user}><Dashboard/></ProtectedRoute>
         <ProtectedRoute path="/profile" isLoading={isLoading} isAuthed={!!user}><Profile/></ProtectedRoute>
         <ProtectedRoute path="/manage" isLoading={isLoading} isAuthed={!!user}><Manage/></ProtectedRoute>
+        <ProtectedRoute path="/cloudgileProject" isLoading={isLoading} isAuthed={!!user}><Cloudgileproject/></ProtectedRoute>
         {/* <ProtectedRoute path="/projects/projectID/members" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         {/* <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         <ProtectedRoute path="/settings" isLoading={isLoading} isAuthed={!!user}><Settings/></ProtectedRoute>
