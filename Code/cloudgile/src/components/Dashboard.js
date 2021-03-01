@@ -47,7 +47,8 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+
+
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -56,6 +57,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 // import Orders from './Orders';
 import Title from './Title';
 import { project } from 'gcp-metadata';
+import { SearchBar } from './SearchBar';
 
 const drawerWidth = 240;
 
@@ -177,11 +179,15 @@ export default function Dashboard() {
            Welcome {getCurrentUser().email}
            {/* Welcome <ul>{getAllUsers().email}</ul> */}
           </Typography>
+          <SearchBar />
+          <Button style={{marginLeft:6}} variant="contained" color="primary">
+            Customize 
+         </Button>
           <IconButton color="inherit">
             <Badge badgeContent={2} color="secondary">
               <NotificationsIcon />
             </Badge>
-          </IconButton>
+          </IconButton> 
         </Toolbar>
       </AppBar>
       <Drawer
