@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -16,6 +17,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Link from '@material-ui/core/Link';
 import ListItem from '@material-ui/core/ListItem';
+
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
@@ -53,13 +55,14 @@ else if (projectId==2)
 }
 
 function Row(props) {
+    const history = useHistory();
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
 
-  function handleClick(e){
-      this.router.transitionTo('/cloudgileProject');
-  }
+  const handleCellClick = (e) => {
+   history.push(`/${row.projectName}`);
+}
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
@@ -69,10 +72,9 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell  component="th" scope="row">
-        {/* <ListItem button> */}
-            
+        <ListItem onClick={handleCellClick} button>
                 {row.projectName}
-          {/* </ListItem> */}
+          </ListItem>
         </TableCell>
         <TableCell align="right">{row.projectType}</TableCell>
         <TableCell align="right">{row.projectLead}</TableCell>
@@ -129,8 +131,9 @@ Row.propTypes = {
 };
 
 const rows = [
+    
   createData('cloudgile', 'Scrum development', 'Tirth', 'Spring 2021', 'none',1),
-  createData('speech analyzer', 'Basic software development', 'Akshant', 'No category', 'none',2 ),
+  createData('speechAnalyzer', 'Basic software development', 'Akshant', 'No category', 'none',2 ),
 ];
 
 export default function CollapsibleTable() {

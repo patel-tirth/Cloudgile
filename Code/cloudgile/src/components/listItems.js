@@ -26,7 +26,6 @@ export const mainListItems = (
       <ListItemText primary="Dashboard" />
     </ListItem>
     </Link>
-    {/* <ListItem button> */}
     <Link to="/manage">
     <ListItem button> 
       <ListItemIcon>
