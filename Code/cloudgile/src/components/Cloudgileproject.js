@@ -1,5 +1,31 @@
-import React from 'react'
+
+
+// function renderLoggedIn() {
+//     return (
+//         <div className="loggedIn-wrapper">
+//             <div>
+//                 <Button onClick={() => signOut()} color="yellow">
+//                     Log out
+//         </Button>
+//             </div>
+//         </div>
+//     );
+// }
+
+// function Dashboard() {
+//     const [user, setUser] = useState(getCurrentUser());
+//     auth.onAuthStateChanged((user) => setUser(user));
+
+//     return (
+//         <div>{user ? renderLoggedIn() : null}</div>
+        
+//     )    
+// }
+
+import React from 'react';
 import { getCurrentUser } from "../auth";
+import CollapsibleTable from './projectList';
+// import { getAllUsers }  from '../auth';
 import { useState } from "react";
 
 import { signOut } from "../auth/signOut";
@@ -21,15 +47,17 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+
+
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-// import logo from '../img/new_user.png';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
 import Title from './Title';
+import { project } from 'gcp-metadata';
+import { SearchBar } from './SearchBar';
+import GithubApi from "./Github";
+import '../App.css';
 
 const drawerWidth = 240;
 
@@ -115,22 +143,20 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
-  userPhoto: {
-    paddingLeft: '40px',
-  },
 }));
 
-export const Settings = () => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
+export default function CloudgileProject() {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
   };
-  
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -145,18 +171,15 @@ export const Settings = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Settings
-          </Typography>
-  
-          <Typography  color="inherit" noWrap className={classes.title}>
-           Welcome {getCurrentUser().email}
+          <SearchBar />
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+            Cloudgile
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={2} color="secondary">
+            <Badge style={{marginLeft:300}} badgeContent={2} color="secondary">
               <NotificationsIcon />
             </Badge>
-          </IconButton>
+          </IconButton> 
         </Toolbar>
       </AppBar>
       <Drawer
@@ -168,7 +191,7 @@ export const Settings = () => {
       >
         <div className={classes.toolbarHeading}>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            MENU
+            DASHBOARD MENU
           </Typography>
           <div>
             <IconButton onClick={handleDrawerClose}>
@@ -179,69 +202,71 @@ export const Settings = () => {
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
-        {/* <List>{secondaryListItems}</List> */}
+
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
+        
+      
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             
             <Grid item  xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
-                
+               
              
-                <Title>Avatar</Title>
-                {/* <div className = {classes.userPhoto}><img src={logo} alt="logo" width = "200" height = "140"/></div> */}
+                <Title>Product Backlog</Title>
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
+         
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
-                <Title>Details</Title>
-                <form>
-                    <label>
-                        Full Name: 
-                        <input type="text" name="name" />
-                    </label>
-                    <br></br>
-                    <label>
-                        Username:
-                        <input type="text" name="phone"/>
-                    </label>
-                    <br></br>
-                    <label>
-                        Phone No:
-                        <input type="text" name="phone"/>
-                    </label>
-                    <br></br>
-                    <br></br>
-                    <input type="submit" value="Update"/>
-                </form>
+         
+                <Title>Timeline</Title>
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+    
             <Grid item xs={12} md={4} lg={4}>
             <Paper className={fixedHeightPaper}>
-                <Title>Miscellaneous</Title>
-                <input type="submit" value="Unlink Github"/>
-                <br></br>
-                <input type="submit" value="Unlink Google"/>
-                <br></br>
-                <input type="submit" value="Delete Account"/>
-                <br></br>
+            
+                <Title>Search Engine</Title>
               </Paper>
             </Grid>
           </Grid>
-          {/* <Box pt={4}>
-            <Copyright />
-          </Box> */}
+          <Grid container spacing={3} mt={4}>
+            
+            <Grid item  xs={12} md={4} lg={4} >
+              <Paper className={fixedHeightPaper}>
+       
+                <Title>Chat</Title>
+              </Paper>
+            </Grid>
+      
+            {/* <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+             
+                <Title>Github</Title>
+           
+              </Paper>
+            </Grid>
+        */}
+            <Grid item xs={12} md={4} lg={4}>
+            <Paper className={fixedHeightPaper}>
+            
+                <Title>Reminder</Title>
+              </Paper>
+            </Grid>
+          </Grid>
+         
         </Container>
-      </main>
+      </main> 
+      <div className='githubApi'>
+      <GithubApi/>
+      </div>
+      
+     
     </div>
   );
 }
 
-{/* <div className = {classes.userPhoto}><img src={logo} alt="logo" width = "200" height = "140"/></div> */}
-        
+// export default Dashboard;

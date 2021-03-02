@@ -7,6 +7,7 @@
 
 import React from "react";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBoxOpen, faCartArrowDown, faChartPie, faChevronDown, faClipboard, faCommentDots, faFileAlt, faPlus, faRocket, faStore } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Button, Dropdown } from '@themesberg/react-bootstrap';
 // import { ChoosePhotoWidget, ProfileCardWidget } from "../components/Widgets";
@@ -28,8 +29,6 @@ export const Manage = () => {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-
       </div>
-
   );
 };

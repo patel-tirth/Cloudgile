@@ -24,6 +24,7 @@ import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css'
 import 'firebaseui/dist/firebaseui.css'
 
+
 ReactDOM.render(
     <App />,
   document.getElementById('root')

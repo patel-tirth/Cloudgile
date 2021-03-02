@@ -24,6 +24,8 @@
 
 import React from 'react';
 import { getCurrentUser } from "../auth";
+import CollapsibleTable from './projectList';
+// import { getAllUsers }  from '../auth';
 import { useState } from "react";
 
 import { signOut } from "../auth/signOut";
@@ -45,7 +47,8 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+
+
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -54,6 +57,7 @@ import { SearchBar } from './SearchBar';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 import Title from './Title';
+import { project } from 'gcp-metadata';
 
 const drawerWidth = 240;
 
@@ -185,7 +189,7 @@ export default function Dashboard() {
             <Badge badgeContent={2} color="secondary">
               <NotificationsIcon />
             </Badge>
-          </IconButton>
+          </IconButton> 
         </Toolbar>
       </AppBar>
       <Drawer
@@ -208,33 +212,36 @@ export default function Dashboard() {
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
-        {/* <List>{secondaryListItems}</List> */}
+
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
+        <Typography component="h1" variant="h6" color="blue" noWrap align="center" >
+            Your Projects
+          </Typography>
+      {/*
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             
             <Grid item  xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
+               
                 
              
                 <Title>Product Backlog</Title>
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
+         
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
+         
                 <Title>Timeline</Title>
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+    
             <Grid item xs={12} md={4} lg={4}>
             <Paper className={fixedHeightPaper}>
-              {/* <Paper className={classes.paper}> */}
-                {/* <Orders /> */}
+            
                 <Title>Search Engine</Title>
               </Paper>
             </Grid>
@@ -243,31 +250,32 @@ export default function Dashboard() {
             
             <Grid item  xs={12} md={4} lg={4} >
               <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
+       
                 <Title>Chat</Title>
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
+      
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
+             
                 <Title>Code/Project</Title>
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+       
             <Grid item xs={12} md={4} lg={4}>
             <Paper className={fixedHeightPaper}>
-              {/* <Paper className={classes.paper}> */}
-                {/* <Orders /> */}
+            
                 <Title>Reminder</Title>
               </Paper>
             </Grid>
           </Grid>
-          {/* <Box pt={4}>
-            <Copyright />
-          </Box> */}
+         
         </Container>
+      </main> */}
+      
+      <CollapsibleTable/>
       </main>
+     
     </div>
   );
 }

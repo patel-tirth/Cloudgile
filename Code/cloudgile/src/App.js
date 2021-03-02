@@ -20,6 +20,7 @@ import Dashboard from './components/Dashboard';
 import { Profile } from './components/Profile';
 import { Settings } from './components/Settings';
 import { Manage } from './components/Manage';
+import CloudgileProject from './components/Cloudgileproject';
 
 function App() {
   const { isLoading, user } = useAuth();
@@ -37,6 +38,7 @@ function App() {
         <ProtectedRoute path="/projects/:projectID/" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
         <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
         <ProtectedRoute path="/manage" isLoading={isLoading} isAuthed={!!user}><Manage/></ProtectedRoute>
+        <ProtectedRoute path="/cloudgile" isLoading={isLoading} isAuthed={!!user}><CloudgileProject/></ProtectedRoute>
         {/* <ProtectedRoute path="/projects/projectID/members" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         {/* <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         <ProtectedRoute path="/settings" isLoading={isLoading} isAuthed={!!user}><Settings/></ProtectedRoute>
