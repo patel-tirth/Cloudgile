@@ -53,11 +53,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
 import Title from './Title';
 import { project } from 'gcp-metadata';
 import { SearchBar } from './SearchBar';
+import GithubApi from "./Github";
+import '../App.css';
 
 const drawerWidth = 240;
 
@@ -242,13 +242,14 @@ export default function CloudgileProject() {
               </Paper>
             </Grid>
       
-            <Grid item xs={12} md={4} lg={4}>
+            {/* <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
              
-                <Title>Code/Project</Title>
+                <Title>Github</Title>
+           
               </Paper>
             </Grid>
-       
+        */}
             <Grid item xs={12} md={4} lg={4}>
             <Paper className={fixedHeightPaper}>
             
@@ -259,7 +260,9 @@ export default function CloudgileProject() {
          
         </Container>
       </main> 
-      
+      <div className='githubApi'>
+      <GithubApi/>
+      </div>
       
      
     </div>
