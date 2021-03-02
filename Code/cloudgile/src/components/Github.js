@@ -16,7 +16,7 @@ const[repositories,setRepositories] = useState('');
 
 
 useEffect(() => {
-  fetch("https://api.github.com/users/patel-tirth")
+  fetch("https://api.github.com/users/")
   .then(res => res.json())
   .then(data => {
     setData(data)
@@ -104,7 +104,7 @@ return (
   </div>
 </div> 
 
-)}
+)}  
 <div className="repositories">
 <select class="ui dropdown">
   <option value="">Repositories {repos}</option>
