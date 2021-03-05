@@ -8,4 +8,5 @@ export const getCurrentUser = () => {
         name: user.displayName,
         email: user.email, 
     };
+   
 }
