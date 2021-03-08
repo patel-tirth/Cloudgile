@@ -58,6 +58,7 @@ import { project } from 'gcp-metadata';
 import { SearchBar } from './SearchBar';
 import GithubApi from "./Github";
 import '../App.css';
+import NewIssue from './CreateNewIssue';
 
 const drawerWidth = 240;
 
@@ -171,10 +172,12 @@ export default function CloudgileProject() {
           >
             <MenuIcon />
           </IconButton>
-          <SearchBar />
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+         
+          <Typography style={{marginLeft:300}} component="h1" center variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             Cloudgile
           </Typography>
+          <div style={{marginLeft:300}}>     <SearchBar /></div>
+     
           <IconButton color="inherit">
             <Badge style={{marginLeft:300}} badgeContent={2} color="secondary">
               <NotificationsIcon />
@@ -262,6 +265,7 @@ export default function CloudgileProject() {
       </main> 
       <div className='githubApi'>
       <GithubApi/>
+      <div style={{marginTop:10}}><NewIssue/></div>
       </div>
       
      
