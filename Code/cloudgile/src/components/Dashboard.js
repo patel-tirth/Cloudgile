@@ -23,8 +23,10 @@
 // }
 
 import React from 'react';
+import { Modal } from 'react-bootstrap';
 import { getCurrentUser } from "../auth";
 import CollapsibleTable from './projectList';
+import NewProject from './CreateNewProject';
 // import { getAllUsers }  from '../auth';
 import { useState } from "react";
 
@@ -146,9 +148,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-
+  const [form, setForm] = React.useState(false);
+  const [show, setShow] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -156,7 +160,8 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  
+  
   return (
     // <div></div>
     
@@ -272,8 +277,14 @@ export default function Dashboard() {
          
         </Container>
       </main> */}
+
       
       <CollapsibleTable/>
+     
+     <div style={{marginTop:10}}><NewProject/></div>
+      
+       
+
       </main>
      
     </div>
