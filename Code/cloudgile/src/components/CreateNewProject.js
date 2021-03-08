@@ -29,6 +29,11 @@ export default function  NewProject() {
             <Form.Control type="text" placeholder="Enter project name" />
             </Form.Group>
 
+            <Form.Group controlId="formProjectDescription">
+            <Form.Label>Project Description</Form.Label>
+            <Form.Control as="textarea" placeholder="Enter project description" />
+            </Form.Group>
+
             <Form.Group controlId="formProjectType">
             <Form.Label>Project Type</Form.Label>
             <Form.Control type="text" placeholder="Enter project type" />
