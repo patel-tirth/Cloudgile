@@ -3,7 +3,8 @@ import {Form,Card,Image,Icon} from 'semantic-ui-react';
 import {Dropdown} from 'bootstrap';
 
 const GithubApi = () => {
-
+    
+    
 const[name,setName] = useState('');
 const[userName,setUsername] = useState('');
 const[followers,setFollowers] = useState('');
@@ -23,14 +24,6 @@ useEffect(() => {
   })
 }, [])
 
-// useEffect(() => {
-//     fetch("https://api.github.com/users/patel-tirth")
-//     .then(res => res.json())
-//     .then(data => {
-//       setData(data)
-//     })
-//   }, [props.x])
-
 const setData = ({name, login, followers,following, public_repos,avatar_url,repos_url}) => {
     setName(name)
     setUsername(login)
@@ -42,7 +35,7 @@ const setData = ({name, login, followers,following, public_repos,avatar_url,repo
 }
 
 const setReposs= ({reposArray}) =>{
-setRepositories(reposArray);
+setRepositories(reposArray.name);
 }
 
 const handleSearch = (e) => {
@@ -65,9 +58,9 @@ const handleSubmit = () => {
 const searchRepos = () => {
     fetch(`https://api.github.com/users/${userInput}/repos`)
     .then(res => res.json())
+    // .then(data => this.setState({ data }));
     .then(data => this.setReposs({data}))
 }
-
 
 return (
     <div>
@@ -110,6 +103,7 @@ return (
   <option value="">Repositories {repos}</option>
   
 </select>
+
 </div>
         
     </div>
