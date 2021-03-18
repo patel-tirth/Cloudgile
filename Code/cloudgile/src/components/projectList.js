@@ -27,17 +27,17 @@ const useRowStyles = makeStyles({
 });
 
 function createData(projectName, projectType, projectLead, projectCategory, URL,projectId) {
-    if(projectId == 1){
-  return {
-    projectName,
-    projectType,
-    projectLead,
-    projectCategory,
-    URL,
-    history: [
-      { date: '2020-01-02', clientId: 'CS 440' },
-    ],
-  };
+    if(projectId === 1){
+      return {
+        projectName,
+        projectType,
+        projectLead,
+        projectCategory,
+        URL,
+        history: [
+          { date: '2020-01-02', clientId: 'CS 440' },
+        ],
+      };
 }
 else if (projectId==2)
 {
@@ -62,7 +62,8 @@ function Row(props) {
 
   const handleCellClick = (e) => {
    history.push(`/${row.projectName}`);
-}
+  }
+  
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
