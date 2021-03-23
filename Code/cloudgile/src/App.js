@@ -35,14 +35,12 @@ function App() {
         <ProtectedRoute path="/reminders"></ProtectedRoute>
         <ProtectedRoute path="/dashboard" exact isLoading={isLoading} isAuthed={!!user}><Dashboard/></ProtectedRoute>
         <ProtectedRoute path="/profile" isLoading={isLoading} isAuthed={!!user}><Profile/></ProtectedRoute>
-        <ProtectedRoute path="/projects/:projectID/" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
-        <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
+        <ProtectedRoute path="/projects/:projectID/" isLoading={isLoading} isAuthed={!!user}><CloudgileProject/></ProtectedRoute>
         <ProtectedRoute path="/manage" isLoading={isLoading} isAuthed={!!user}><Manage/></ProtectedRoute>
         {/* <ProtectedRoute path="/projects/projectID/members" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         {/* <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         <ProtectedRoute path="/settings" isLoading={isLoading} isAuthed={!!user}><Settings/></ProtectedRoute>
         <ProtectedRoute path="/signOut" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
-        <ProtectedRoute path="/createProject" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
         <Redirect to="/dashboard"/>
       </Switch>
     </Router>

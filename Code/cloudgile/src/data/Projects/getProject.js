@@ -13,7 +13,7 @@ export const getProject = async (user_id, project_id) => {
             }
         }).then(async () => {
             if (access) {
-                await firebase.database.ref('/projects/' + project_id).once('value', snapshot => {
+                await firebase.database().ref('/projects/' + project_id).once('value', snapshot => {
                     data = snapshot.val()
                 })
             }

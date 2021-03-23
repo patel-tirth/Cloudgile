@@ -6,7 +6,7 @@ export const getCurrentUser = () => {
     return {
         id: user.uid,
         name: user.displayName,
-        email: user.email, 
+        email: user.email
     };
    
 }

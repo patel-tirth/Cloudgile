@@ -11,6 +11,7 @@ import { getCurrentUser } from "../auth";
 import { signOut } from '../auth/signOut'
 import { signUp } from "../auth/signUp";
 import DividerLine from "../util/DividerLine";
+import { createUser } from "../auth/createUser";
 
 
 function renderLoggedIn() {
@@ -52,6 +53,7 @@ function SignUpForm() {
     const onSignInWithGoogleClicked = async () => {
         await signInWithGoogle();
         history.push('/');
+        createUser(getCurrentUser().id)
     }
 
     const onSignUpWithEmailPassword = async () => {
