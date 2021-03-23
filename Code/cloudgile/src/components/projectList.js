@@ -28,37 +28,6 @@ const useRowStyles = makeStyles({
   }
 });
 
-<<<<<<< Updated upstream
-function createData(projectName, projectType, projectLead, projectCategory, URL,projectId) {
-    if(projectId === 1){
-      return {
-        projectName,
-        projectType,
-        projectLead,
-        projectCategory,
-        URL,
-        history: [
-          { date: '2020-01-02', clientId: 'CS 440' },
-        ],
-      };
-}
-else if (projectId==2)
-{
-    return {
-        projectName,
-        projectType,
-        projectLead,
-        projectCategory,
-        URL,
-        history: [
-          { date: '2021-02s-02', clientId: 'Test client ' },
-        ],
-      };
-}
-}
-
-=======
->>>>>>> Stashed changes
 function Row(props) {
   const history = useHistory();
   const { row } = props;
@@ -66,15 +35,9 @@ function Row(props) {
   const classes = useRowStyles();
 
   const handleCellClick = (e) => {
-<<<<<<< Updated upstream
-   history.push(`/${row.projectName}`);
-  }
-  
-=======
     e.preventDefault()
    history.push(`/projects/${row.id}`);
 }
->>>>>>> Stashed changes
   return (
     <React.Fragment>
       <TableRow className={classes.root} onClick={handleCellClick} button>

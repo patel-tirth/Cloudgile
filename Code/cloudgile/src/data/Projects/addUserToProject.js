@@ -1,16 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
 
-<<<<<<< Updated upstream
-export const addUserToProject = async (user_id, project_id, project_details) => {
-    try {
-        await firebase.database().ref('projects/' + project_id).set(project_details)
-        await firebase.database.ref('users/' + user_id + '/projects/').push(project_id)
-    } catch (error) {
-        throw new Error(error.message);
-    }
-}
-=======
 export const addUserToProject = async (project_id, user) => {
     await firebase.database().ref('projects/' + project_id).once('value', snapshot => {
         const numusers = snapshot.child('numUsers').val()
@@ -42,4 +32,3 @@ export const addUserToProject = async (project_id, user) => {
         throw new Error(error.message)
     })
 }
->>>>>>> Stashed changes
