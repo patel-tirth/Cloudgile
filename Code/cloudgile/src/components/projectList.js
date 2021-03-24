@@ -15,73 +15,44 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Link from '@material-ui/core/Link';
-import ListItem from '@material-ui/core/ListItem';
 
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
       borderBottom: 'unset',
     },
-  },
+    "&:hover": {
+      backgroundColor: 'rgb(202, 202, 202, 0.42)',
+      cursor: 'pointer'
+    }
+  }
 });
 
-function createData(projectName, projectType, projectLead, projectCategory, URL,projectId) {
-    if(projectId == 1){
-  return {
-    projectName,
-    projectType,
-    projectLead,
-    projectCategory,
-    URL,
-    history: [
-      { date: '2020-01-02', clientId: 'CS 440' },
-    ],
-  };
-}
-else if (projectId==2)
-{
-    return {
-        projectName,
-        projectType,
-        projectLead,
-        projectCategory,
-        URL,
-        history: [
-          { date: '2021-02s-02', clientId: 'Test client ' },
-        ],
-      };
-}
-}
-
 function Row(props) {
-    const history = useHistory();
+  const history = useHistory();
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
 
   const handleCellClick = (e) => {
-   history.push(`/${row.projectName}`);
+    e.preventDefault()
+   history.push(`/projects/${row.id}`);
 }
   return (
     <React.Fragment>
-      <TableRow className={classes.root}>
+      <TableRow className={classes.root} onClick={handleCellClick} button>
         <TableCell>
-          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+          {row.issues && <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
+          </IconButton>}
         </TableCell>
-        <TableCell  component="th" scope="row">
-        <ListItem onClick={handleCellClick} button>
-                {row.projectName}
-          </ListItem>
-        </TableCell>
-        <TableCell align="right">{row.projectType}</TableCell>
-        <TableCell align="right">{row.projectLead}</TableCell>
-        <TableCell align="right">{row.projectCategory}</TableCell>
+        <TableCell component="th" scope="row">{row.name}</TableCell>
+        <TableCell align="right">{row.type}</TableCell>
+        <TableCell align="right">{row.lead}</TableCell>
+        <TableCell align="right">{row.category}</TableCell>
         <TableCell align="right">{row.URL}</TableCell>
       </TableRow>
-      <TableRow>
+      {row.issues && <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
@@ -91,17 +62,19 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Recent update</TableCell>
-                    <TableCell>Client</TableCell>
+                    <TableCell>Issue</TableCell>
+                    <TableCell>Created On</TableCell>
+                    <TableCell>Updated On</TableCell>
+                    <TableCell>Updated By</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
+                  {row.issues.map((historyRow) => (
                     <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.clientId}</TableCell>
+                      <TableCell component="th" scope="row">{historyRow.issueName}</TableCell>
+                      <TableCell>{historyRow.updatedOn}</TableCell>
+                      <TableCell>{historyRow.updatedBy}</TableCell>
+                      <TableCell>{historyRow.createdOn}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -109,34 +82,30 @@ function Row(props) {
             </Box>
           </Collapse>
         </TableCell>
-      </TableRow>
+      </TableRow>}
     </React.Fragment>
   );
 }
 
 Row.propTypes = {
   row: PropTypes.shape({
-    projectType: PropTypes.string.isRequired,
-    projectLead: PropTypes.string.isRequired,
-    projectCategory: PropTypes.string.isRequired,
-    history: PropTypes.arrayOf(
+    type: PropTypes.string.isRequired,
+    lead: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    issues: PropTypes.arrayOf(
       PropTypes.shape({
-        clientId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
+        issueName: PropTypes.string.isRequired,
+        createdOn: PropTypes.string.isRequired,
+        updatedOn: PropTypes.string.isRequired,
+        updatedBy: PropTypes.string.isRequired
       }),
-    ).isRequired,
-    projectName: PropTypes.string.isRequired,
-    URL: PropTypes.string.isRequired,
+    ),
+    name: PropTypes.string.isRequired,
+    URL: PropTypes.string,
   }).isRequired,
 };
 
-const rows = [
-    
-  createData('cloudgile', 'Scrum development', 'Tirth', 'Spring 2021', 'none',1),
-  createData('speechAnalyzer', 'Basic software development', 'Akshant', 'No category', 'none',2 ),
-];
-
-export default function CollapsibleTable() {
+export default function CollapsibleTable(props) {  
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -151,7 +120,7 @@ export default function CollapsibleTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.rows.length > 0 && props.rows.map((row) => (
             <Row key={row.name} row={row} />
           ))}
         </TableBody>

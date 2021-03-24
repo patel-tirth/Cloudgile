@@ -1,42 +1,8 @@
-
-
-// function renderLoggedIn() {
-//     return (
-//         <div className="loggedIn-wrapper">
-//             <div>
-//                 <Button onClick={() => signOut()} color="yellow">
-//                     Log out
-//         </Button>
-//             </div>
-//         </div>
-//     );
-// }
-
-// function Dashboard() {
-//     const [user, setUser] = useState(getCurrentUser());
-//     auth.onAuthStateChanged((user) => setUser(user));
-
-//     return (
-//         <div>{user ? renderLoggedIn() : null}</div>
-        
-//     )    
-// }
-
 import React from 'react';
-import { getCurrentUser } from "../auth";
-import CollapsibleTable from './projectList';
-// import { getAllUsers }  from '../auth';
-import { useState } from "react";
-
-import { signOut } from "../auth/signOut";
-import { Button } from "semantic-ui-react";
-import { auth } from "../firebase";
-
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -52,9 +18,8 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems } from './listItems';
 import Title from './Title';
-import { project } from 'gcp-metadata';
 import { SearchBar } from './SearchBar';
 import GithubApi from "./Github";
 import '../App.css';
@@ -244,15 +209,6 @@ export default function CloudgileProject() {
                 <Title>Chat</Title>
               </Paper>
             </Grid>
-      
-            {/* <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-             
-                <Title>Github</Title>
-           
-              </Paper>
-            </Grid>
-        */}
             <Grid item xs={12} md={4} lg={4}>
             <Paper className={fixedHeightPaper}>
             
@@ -267,10 +223,6 @@ export default function CloudgileProject() {
       <GithubApi/>
       <div style={{marginTop:10}}><NewIssue/></div>
       </div>
-      
-     
     </div>
   );
 }
-
-// export default Dashboard;
