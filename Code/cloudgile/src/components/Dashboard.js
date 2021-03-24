@@ -29,7 +29,7 @@ import CollapsibleTable from './projectList';
 import NewProject from './CreateNewProject';
 // import { getAllUsers }  from '../auth';
 import { useState } from "react";
-
+import PropTypes from "prop-types";
 import { signOut } from "../auth/signOut";
 import { Button } from "semantic-ui-react";
 import { auth } from "../firebase";
@@ -54,6 +54,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationToggle from './NotificationToggle';
 import { mainListItems, secondaryListItems } from './listItems';
 import { SearchBar } from './SearchBar';
 // import Deposits from './Deposits';
@@ -147,8 +148,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
-  
+export default function Dashboard(props) {
+  const { messages } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [form, setForm] = React.useState(false);
@@ -192,7 +193,7 @@ export default function Dashboard() {
           <SearchBar />
           <IconButton color="inherit">
             <Badge badgeContent={2} color="secondary">
-              <NotificationsIcon />
+              <NotificationToggle messages = {messages}/>
             </Badge>
           </IconButton> 
         </Toolbar>
@@ -290,5 +291,9 @@ export default function Dashboard() {
     </div>
   );
 }
+
+Dashboard.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 // export default Dashboard;
