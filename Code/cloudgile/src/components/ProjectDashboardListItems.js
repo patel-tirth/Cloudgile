@@ -28,12 +28,12 @@ export const mainListItems = (
     </Link>
     {/* <ListItem button> */}
     <Link to="/manage">
-    {/* <ListItem button> 
+    <ListItem button> 
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Manage members" />
-    </ListItem> */}
+    </ListItem>
     </Link>
     {/* <ListItem button>
       <ListItemIcon>
