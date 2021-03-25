@@ -13,8 +13,8 @@ const[repos,setRepos] = useState('');
 const[avatar,setAvatar] = useState('');
 const[userInput,setUserInput] = useState('');
 const[error,setError] = useState(null);
-const[repositories,setRepositories] = useState('');
-
+const[repositories,setRepositories] = useState([]);
+let reposArray = []
 
 useEffect(() => {
   fetch("https://api.github.com/users/")
@@ -22,7 +22,21 @@ useEffect(() => {
   .then(data => {
     setData(data)
   })
-}, [])
+}, []);
+
+// const getRepos =() => {
+
+  
+  useEffect(() => { 
+    fetch(`https://api.github.com/users/${userInput}/repos`)
+    .then(res => res.json())
+    .then(data => {
+      setRepositories(data)
+    })
+  }, [])
+ 
+// }
+
 
 const setData = ({name, login, followers,following, public_repos,avatar_url,repos_url}) => {
     setName(name)
@@ -34,9 +48,9 @@ const setData = ({name, login, followers,following, public_repos,avatar_url,repo
     // setRepositories(repos_url)
 }
 
-const setReposs= ({reposArray}) =>{
-setRepositories(reposArray.name);
-}
+
+
+
 
 const handleSearch = (e) => {
     setUserInput(e.target.value)
@@ -55,14 +69,31 @@ const handleSubmit = () => {
         }
     })
 }
-const searchRepos = () => {
-    fetch(`https://api.github.com/users/${userInput}/repos`)
-    .then(res => res.json())
-    // .then(data => this.setState({ data }));
-    .then(data => this.setReposs({data}))
+
+const setReposData= (data) =>{
+
+  // data.forEach((d) => {
+  //   reposArray.push(d.name)
+
+  // })
+  for(var i = 0 ; i < data.length; ++i){
+    reposArray.push(data[i])
+  }
+  console.log(reposArray[0])
+
+}
+
+const handleSearchRepos = () => {
+  fetch(`https://api.github.com/users/${userInput}/repos`)
+  .then(res =>res.json())
+  .then(data => {
+    setReposData(data);
+  
+  })
 }
 
 return (
+  
     <div>
         <div className="search">
             <Form onSubmit={handleSubmit}>
@@ -74,6 +105,19 @@ return (
               onChange={handleSearch}
             />
             <Form.Button content='Search' />
+            </Form.Group>
+            </Form>
+         </div>
+         <div className="searchRepos">
+            <Form onSubmit={handleSearchRepos}>
+          <Form.Group>
+            <Form.Input
+              placeholder='Github '
+              name='github '
+              value={name}
+              onChange={handleSearch}
+            />
+            <Form.Button content='Search Repos' />
             </Form.Group>
             </Form>
          </div>
@@ -98,11 +142,21 @@ return (
 </div> 
 
 )}  
-<div className="repositories">
-<select class="ui dropdown">
-  <option value="">Repositories {repos}</option>
-  
-</select>
+<div className="repositoriess">
+ <ul>
+       {reposArray.map((repo, index) => (
+          <li key={index}>{repo.name} </li>
+         ))}
+      </ul> 
+  <select class="ui dropdown">
+
+  <option value="">Repositories {repositories[0]}</option> 
+
+  {/* {console.log(repo.name)} */}
+
+ </select>  
+   {/* {reposArray.map((repo) => console.log(repo.name)) } */}
+
 
 </div>
         

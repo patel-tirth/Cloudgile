@@ -24,7 +24,7 @@
 
 import React from 'react';
 import { getCurrentUser } from "../auth";
-import CollapsibleTable from './projectList';
+import Backlog from './Backlog';
 // import { getAllUsers }  from '../auth';
 import { useState } from "react";
 
@@ -52,13 +52,15 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems, secondaryListItems } from './ProjectDashboardListItems';
 import Title from './Title';
 import { project } from 'gcp-metadata';
 import { SearchBar } from './SearchBar';
 import GithubApi from "./Github";
 import '../App.css';
 import NewIssue from './CreateNewIssue';
+
+
 
 const drawerWidth = 240;
 
@@ -214,36 +216,38 @@ export default function CloudgileProject() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             
-            <Grid item  xs={12} md={4} lg={4}>
+            <Grid item  xs={12} md={8} lg={12}>
               <Paper className={fixedHeightPaper}>
                
              
                 <Title>Product Backlog</Title>
+                     <Backlog/>
+               
               </Paper>
             </Grid>
          
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={8} lg={12}>
               <Paper className={fixedHeightPaper}>
          
                 <Title>Timeline</Title>
               </Paper>
             </Grid>
-    
+{/*     
             <Grid item xs={12} md={4} lg={4}>
             <Paper className={fixedHeightPaper}>
             
                 <Title>Search Engine</Title>
               </Paper>
-            </Grid>
+            </Grid> */}
           </Grid>
           <Grid container spacing={3} mt={4}>
             
-            <Grid item  xs={12} md={4} lg={4} >
+            {/* <Grid item  xs={12} md={4} lg={4} >
               <Paper className={fixedHeightPaper}>
        
                 <Title>Chat</Title>
               </Paper>
-            </Grid>
+            </Grid> */}
       
             {/* <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
@@ -253,20 +257,22 @@ export default function CloudgileProject() {
               </Paper>
             </Grid>
         */}
-            <Grid item xs={12} md={4} lg={4}>
+            {/* <Grid item xs={12} md={4} lg={4}>
             <Paper className={fixedHeightPaper}>
             
                 <Title>Reminder</Title>
               </Paper>
-            </Grid>
+            </Grid> */}
           </Grid>
-         
+          {/* <div> <NewIssue/></div> */}
+          {/* <Backlog/>   */}
         </Container>
       </main> 
-      <div className='githubApi'>
-      <GithubApi/>
-      <div style={{marginTop:10}}><NewIssue/></div>
-      </div>
+      {/* <div className='githubApi'>
+      <GithubApi/> */}
+     
+     
+      {/* </div> */}
       
      
     </div>
