@@ -1,44 +1,19 @@
-
-
-// function renderLoggedIn() {
-//     return (
-//         <div className="loggedIn-wrapper">
-//             <div>
-//                 <Button onClick={() => signOut()} color="yellow">
-//                     Log out
-//         </Button>
-//             </div>
-//         </div>
-//     );
-// }
-
-// function Dashboard() {
-//     const [user, setUser] = useState(getCurrentUser());
-//     auth.onAuthStateChanged((user) => setUser(user));
-
-//     return (
-//         <div>{user ? renderLoggedIn() : null}</div>
-        
-//     )    
-// }
-
 import React from 'react';
-import { Modal } from 'react-bootstrap';
 import { getCurrentUser } from "../auth";
 import CollapsibleTable from './projectList';
 import NewProject from './CreateNewProject';
-// import { getAllUsers }  from '../auth';
-import { useState } from "react";
 
+import { useState } from "react";
+import PropTypes from "prop-types";
 import { signOut } from "../auth/signOut";
 import { Button } from "semantic-ui-react";
 import { auth } from "../firebase";
+
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -46,20 +21,17 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+
+import NotificationToggle from './NotificationToggle';
 import { mainListItems, secondaryListItems } from './listItems';
+
 import { SearchBar } from './SearchBar';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
-import Title from './Title';
-import { project } from 'gcp-metadata';
+import { useEffect } from 'react';
+import { getAllProjects } from '../data/Projects';
 
 const drawerWidth = 240;
 
@@ -147,24 +119,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
-  
+export default function Dashboard(props) {
+  const { messages } = props;
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [form, setForm] = React.useState(false);
   const [show, setShow] = React.useState(false);
+  const [rows, setRows] = React.useState([])
+  const [refresh, setRefresh] = React.useState(false);
+
+  useEffect(() => {
+    loadData();
+  }, [])
+
+  const loadData = async () => {
+    const result = await getAllProjects(getCurrentUser().id);
+    setRows(result)
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   
-  
-  return (
-    // <div></div>
-    
+  return (    
     <div className={classes.root}>
      
       <CssBaseline />
@@ -176,8 +157,7 @@ export default function Dashboard() {
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}>
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
@@ -185,14 +165,12 @@ export default function Dashboard() {
           </Typography>
   
           <Typography  color="inherit" noWrap className={classes.title}>
-          
            Welcome {getCurrentUser().email}
-           
           </Typography>
           <SearchBar />
           <IconButton color="inherit">
             <Badge badgeContent={2} color="secondary">
-              <NotificationsIcon />
+              <NotificationToggle messages = {messages}/>
             </Badge>
           </IconButton> 
         </Toolbar>
@@ -202,8 +180,7 @@ export default function Dashboard() {
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
-        open={open}
-      >
+        open={open}>
         <div className={classes.toolbarHeading}>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             DASHBOARD MENU
@@ -223,72 +200,15 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Typography component="h1" variant="h6" color="blue" noWrap align="center" >
             Your Projects
-          </Typography>
-      {/*
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            
-            <Grid item  xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-               
-                
-             
-                <Title>Product Backlog</Title>
-              </Paper>
-            </Grid>
-         
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-         
-                <Title>Timeline</Title>
-              </Paper>
-            </Grid>
-    
-            <Grid item xs={12} md={4} lg={4}>
-            <Paper className={fixedHeightPaper}>
-            
-                <Title>Search Engine</Title>
-              </Paper>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3} mt={4}>
-            
-            <Grid item  xs={12} md={4} lg={4} >
-              <Paper className={fixedHeightPaper}>
-       
-                <Title>Chat</Title>
-              </Paper>
-            </Grid>
-      
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-             
-                <Title>Code/Project</Title>
-              </Paper>
-            </Grid>
-       
-            <Grid item xs={12} md={4} lg={4}>
-            <Paper className={fixedHeightPaper}>
-            
-                <Title>Reminder</Title>
-              </Paper>
-            </Grid>
-          </Grid>
-         
-        </Container>
-      </main> */}
-
-      
-      <CollapsibleTable/>
-     
-     <div style={{marginTop:10}}><NewProject/></div>
-      
-       
-
+        </Typography>
+        <CollapsibleTable rows={rows}/>
+        <div style={{ marginTop: 10 }}><NewProject loadData={() => loadData()}/></div>
       </main>
      
     </div>
   );
 }
 
-// export default Dashboard;
+Dashboard.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

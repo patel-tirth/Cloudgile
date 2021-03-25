@@ -1,28 +1,5 @@
-
-
-// function renderLoggedIn() {
-//     return (
-//         <div className="loggedIn-wrapper">
-//             <div>
-//                 <Button onClick={() => signOut()} color="yellow">
-//                     Log out
-//         </Button>
-//             </div>
-//         </div>
-//     );
-// }
-
-// function Dashboard() {
-//     const [user, setUser] = useState(getCurrentUser());
-//     auth.onAuthStateChanged((user) => setUser(user));
-
-//     return (
-//         <div>{user ? renderLoggedIn() : null}</div>
-        
-//     )    
-// }
-
 import React from 'react';
+
 import { getCurrentUser } from "../auth";
 import Backlog from './Backlog';
 // import { getAllUsers }  from '../auth';
@@ -36,7 +13,6 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -54,7 +30,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './ProjectDashboardListItems';
 import Title from './Title';
-import { project } from 'gcp-metadata';
 import { SearchBar } from './SearchBar';
 import GithubApi from "./Github";
 import '../App.css';
@@ -274,9 +249,6 @@ export default function CloudgileProject() {
      
       {/* </div> */}
       
-     
     </div>
   );
 }
-
-// export default Dashboard;
