@@ -63,28 +63,7 @@ export default class Backlog extends React.Component {
           backgroundColor:''
         }
       };
-     
-    //   handleInputChange = (e) => {
-    //     let input = e.target;
-    //     let name = e.target.name;
-    //     let value = input.value;
-        
-    //     this.setState({
-    //       [name]: value
-    //     })
-    //   };
-      getTrProps = (state, rowInfo, instance) => {
-        if (rowInfo) {
-          return {
-            style: {
-              background: rowInfo.row.age > 20 ? 'red' : 'green',
-              color: 'white'
-            }
-          }
-        }
-        return {};
-      }
-     
+   
       handleInputChange = (event) => {
        let value = event    .target.value;
         if(value == "high")
@@ -148,22 +127,6 @@ export default class Backlog extends React.Component {
         </Table>
       </TableContainer>
 
-        // <div id="Table">
-        //   <table>
-        //     <tbody>
-        //       <tr>
-        //         <th>Issues</th>
-        //       </tr>
-        //       {items.map(item => {
-        //         return (
-        //           <tr>
-        //             <td>{item.issue}</td>
-        //           </tr>
-        //         );
-        //       })}
-        //     </tbody>
-        //   </table>
-        // </div>
       );
     }
   }
@@ -222,93 +185,3 @@ export default class Backlog extends React.Component {
     }
   }
 
-//  class NewIsssue extends React.Compnent {
-//     constructor() {
-//         super();
-//         this.state = {
-//           show: false,
-//           handleShow: false,
-//           handleClose:true,
-//         }
-//       };
-//       handleShow(){
-//           this.state.show = true;
-//       }
-//       handleClose(){
-//           this.state.show = false;
-//       }
-
-//       render() {
-//         return (
-//           <>
-//           <Button  onClick={this.handleShow}>
-//           Create New Issue
-//          </Button>
-//          <Modal centered show={this.state.show} onHide={this.handleClose}>
-//            <Modal.Header closeButton>
-//             <Modal.Title >New Issue</Modal.Title>
-//           </Modal.Header>
-//            <Modal.Body>
-//             <Form onSubmit={this.props.handleFormSubmit}>
-//            <Form.Group controlId="formProjectName">
-//            <Form.Label>What needs to be done?</Form.Label>
-//            <Form.Control type="text" value={this.newUsername} name="username" onChange={this.handleInputChange} placeholder="Add issue" />
-//             </Form.Group>
-
-//              <Button variant="primary" type="submit">
-//                  Add
-//              </Button>
-//              </Form>
-//          </Modal.Body>
-//            <Modal.Footer>
-//            </Modal.Footer>
-//         </Modal>
-//           </>
-//         );
-//       }
-//   }
-  
-
-  
-
-
-//  function  NewIssue(props) {
-//     const [show, setShow] = useState(false);
-
-//     const handleClose = () => setShow(false);
-//     const handleShow = () => setShow(true);
-  
-//     return (
-     
-//       <>
-       
-//         <Button  onClick={handleShow}>
-//           Create New Issue
-//         </Button>
-  
-//         <Modal centered show={show} onHide={handleClose}>
-//           <Modal.Header closeButton>
-//             <Modal.Title >New Issue</Modal.Title>
-//           </Modal.Header>
-//           <Modal.Body>
-//             <Form onSubmit={this.props.handleFormSubmit}>
-//             <Form.Group controlId="formProjectName">
-//             <Form.Label>What needs to be done?</Form.Label>
-//             <Form.Control type="text" value={this.newUsername} name="username" onChange={this.handleInputChange} placeholder="Add issue" />
-//             </Form.Group>
-
-//             <Button variant="primary" type="submit">
-//                 Add
-//             </Button>
-//             </Form>
-//         </Modal.Body>
-//           <Modal.Footer>
-//           </Modal.Footer>
-//         </Modal>
-//       </>
-//     );
-//   }
-  
-//   export deafult Backlog
-//   ReactDOM.render(<App />, document.getElementById('root'));
-  
