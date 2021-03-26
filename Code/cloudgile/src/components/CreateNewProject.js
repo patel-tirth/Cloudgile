@@ -5,8 +5,8 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import uuid from 'react-uuid'
 import { getCurrentUser } from '../auth';
-import { CreateProject } from '../data/Scrum/CreateProject';
-import { addUserToProject } from '../data/Projects';
+import { CreateProject } from '../Data/Scrum/CreateProject';
+import { addUserToProject } from '../Data/Projects';
 
 export default function NewProject(props) {
     const [show, setShow] = useState(false);

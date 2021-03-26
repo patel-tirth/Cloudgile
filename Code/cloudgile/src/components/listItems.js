@@ -8,7 +8,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { signOut } from "../auth/signOut";
-
+import ChatIcon from '@material-ui/icons/Chat';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
@@ -26,15 +26,23 @@ export const mainListItems = (
       <ListItemText primary="Dashboard" />
     </ListItem>
     </Link>
+    <Link to="/Chat">
+    <ListItem button>
+      <ListItemIcon>
+        <ChatIcon />
+      </ListItemIcon>
+      <ListItemText primary="Chat" />
+    </ListItem>
+    </Link>
     {/* <ListItem button> */}
-    <Link to="/manage">
+    {/* <Link to="/manage"> */}
     {/* <ListItem button> 
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Manage members" />
     </ListItem> */}
-    </Link>
+    {/* </Link> */}
     {/* <ListItem button>
       <ListItemIcon>
         <SearchIcon />

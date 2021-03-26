@@ -31,7 +31,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 
 import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
-import { getAllProjects } from '../data/Projects';
+import { getAllProjects } from '../Data/Projects';
 
 const drawerWidth = 240;
 

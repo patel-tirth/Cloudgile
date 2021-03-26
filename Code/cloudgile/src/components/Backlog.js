@@ -123,10 +123,11 @@ export default class Backlog extends React.Component {
           
          <TableBody>
                 <TableRow>
-                  {items.map((item) => {
+                  {items.map((item,i) => {
                     const value = item.issue;
                     return (
                       <TableRow key={item.id} >
+                          {console.log(item.id)}   
                           <TableCell    style={{backgroundColor: this.state.backgroundColor}}>
                        { value}  &nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         <select onChange={ this.handleInputChange } style={{alignItems: 'flex-end'}}>
