@@ -11,29 +11,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Modal,Form } from 'react-bootstrap';
 
-export const Manage = ()=> {
-  const [people, setDesigners] = useState([]);
-  const [member, setMemberName] = useState('');
+export const Manage = () => {
+  const [members, setMembers] = useState(null);
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
-    setMemberName('')
     setShow(false)
   };
   const handleShow = () => setShow(true);
-let array = [];
+  
   function getUsers() {
-      var users = firebase.database().ref('/users/');
-      users.on('value', (snapshot) => {
-          snapshot.forEach((snap) => {
-              const userObject = snap.val();
-             
-                  const allUsers = [...people, userObject];
-                  array.push(userObject);
-                  setDesigners(allUsers);
-                
-          });
-      });
+    
   }
   useEffect(() => {
       getUsers();
@@ -45,64 +33,50 @@ let array = [];
   }
 
   return (
-
-    
-
-      <TableContainer >
+    <TableContainer >
       <Table stickyHeader aria-label="sticky table">
-     
-      <TableHead> 
+        <TableHead> 
           <TableRow> 
             <TableCell>
               All users
-             
-             <Button  onClick={handleShow} style= {{float:'right'}}>
-                 Add New Member 
-             </Button>
-  
-             <Modal  show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title >Add Member</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={handleSubmit} onClose={handleClose}>
-            <Form.Group controlId="formProjectName">
-            <Form.Label required>Member Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter member name" />
-            </Form.Group>
-            
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-            </Form>
-        </Modal.Body>
-        </Modal>
-              </TableCell> 
-              
-         </TableRow>
+              <Button  onClick={handleShow} style= {{float:'right'}}>
+                  Add New Member 
+              </Button>
+              <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title >Add Member</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form onSubmit={handleSubmit} onClose={handleClose}>
+                  <Form.Group controlId="formProjectName">
+                  <Form.Label required>Member Name</Form.Label>
+                  <Form.Control type="text" placeholder="Enter member name" />
+                  </Form.Group>
+                  <Button variant="primary" type="submit">
+                      Submit
+                  </Button>
+                </Form>
+              </Modal.Body>
+              </Modal>
+            </TableCell> 
+          </TableRow>
         </TableHead>
         
-       <TableBody>
-              <TableRow>
-              {console.log(people)}
-                {people.map((person) => {
-                 
-                  const value = person.email;
-                  return (
-                    <TableRow key={person.id} >
-                        {/* {console.log(perosn.id)}    */}
-                        <TableCell>
-                     { value}  
-                    
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+      <TableBody>
+        <TableRow>
+          {members && members.map((person) => {
+            const value = person.email;
+            return (
+              <TableRow key={person.id} >
+                <TableCell>
+                { value}  
+                </TableCell>
               </TableRow>
-            
-
-        </TableBody>
-      </Table>
-    </TableContainer>
+            );
+          })}
+        </TableRow>
+      </TableBody>
+    </Table>
+  </TableContainer>
   );
 }

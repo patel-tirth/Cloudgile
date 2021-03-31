@@ -17,6 +17,7 @@ export const closeIssue = async (project_id, issue_id, key) => {
         }
         
         const numTimeline = snapshot.child('numTimeline').val()
+        
         if (numTimeline === 0){
             snapshot.ref.child('timeline').set([issue_id])
             snapshot.ref.child('numTimeline').set(numTimeline + 1)

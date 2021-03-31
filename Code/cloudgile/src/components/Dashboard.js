@@ -18,7 +18,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import NotificationToggle from './NotificationToggle';
-import { mainListItems } from './listItems';
+import { MainListItems } from './listItems';
 
 import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
@@ -76,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
+    height: '100vh',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -96,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
+    // height: '100vh',
     overflow: 'auto',
   },
   container: {
@@ -119,7 +120,6 @@ export default function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([])
-  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -181,12 +181,13 @@ export default function Dashboard(props) {
           </div>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <MainListItems/>
+        </List>
         <Divider />
 
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
         <section className="d-inline-flex w-100" style={{ padding: '15px'}}>
           <Typography variant="h4" color="secondary" noWrap align="left" style={{textTransform: 'uppercase', fontWeight: '500' }}>
             Your Projects

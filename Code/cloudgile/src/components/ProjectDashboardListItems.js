@@ -26,7 +26,6 @@ export const mainListItems = (
       <ListItemText primary="Dashboard" />
     </ListItem>
     </Link>
-    {/* <ListItem button> */}
     <Link to="/manage">
     <ListItem button> 
       <ListItemIcon>
@@ -35,12 +34,6 @@ export const mainListItems = (
       <ListItemText primary="Manage members" />
     </ListItem>
     </Link>
-    {/* <ListItem button>
-      <ListItemIcon>
-        <SearchIcon />
-      </ListItemIcon> 
-      <ListItemText primary="Search Engine" />
-    </ListItem> */}
     <Link to="/settings">
       <ListItem button>
         <ListItemIcon>

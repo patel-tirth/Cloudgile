@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
@@ -40,54 +39,39 @@ import {
   MenuItem,
 } from "@material-ui/core";
 
+// function TabPanel(props)
+// {
+//   const classes = useStyles();
+//   const {children, value, index} = props;
 
-
-
-function TabPanel(props)
-{
-  const classes = useStyles();
-  const {children, value, index} = props;
-
-  return <Box>
-    {
-      value === index && index === 2 && (
-      <List>
-      <ListItem button
-      >
-        <ListItemText primary="Gmail" />
-      </ListItem>
-      <Divider />
-      <ListItem button>
-        <ListItemText primary="Github" />
-      </ListItem>
-      <ListItem button>
-        <ListItemText primary="Facebook" />
-      </ListItem>
-      </List>
-      )
-    }
-    {
-      value === index && index === 0 && (
-        <div className={classes.root}>
-            <Avatar alt="Cindy Baker" src="https://techcrunch.com/wp-content/uploads/2018/07/logo-2.png?w=300" className={classes.large} />
-        </div>
+//   return <Box>
+//     {
+//       value === index && index === 2 && (
+//       <List>
+//       <ListItem button
+//       >
+//         <ListItemText primary="Gmail" />
+//       </ListItem>
+//       <Divider />
+//       <ListItem button>
+//         <ListItemText primary="Github" />
+//       </ListItem>
+//       <ListItem button>
+//         <ListItemText primary="Facebook" />
+//       </ListItem>
+//       </List>
+//       )
+//     }
+//     {
+//       value === index && index === 0 && (
+//         <div className={classes.root}>
+//             <Avatar alt="Cindy Baker" src="https://techcrunch.com/wp-content/uploads/2018/07/logo-2.png?w=300" className={classes.large} />
+//         </div>
         
-      )
-    }
-    {/* <Menu
-      id="link-menu"
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-      >
-        <MenuItem onClick={handleCloseMenu}>Test</MenuItem>
-      </Menu> */}
-  </Box>
-    
-}
-
-
+//       )
+//     }
+//   </Box>
+// }
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -112,10 +96,6 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(20),
   },
 }));
-
-
-
-
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -156,7 +136,6 @@ export default function FullScreenDialog() {
         <ListItemText primary="Settings" />
       </ListItem>
 
-
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
@@ -171,17 +150,6 @@ export default function FullScreenDialog() {
             </Button>
           </Toolbar>
         </AppBar>
-
-
-        {/* <List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-          </ListItem>
-        </List> */}
       <Paper className={classes.tab}>
       <Tabs
         value={value}
@@ -197,11 +165,8 @@ export default function FullScreenDialog() {
         <Tab label="Links" icon={<LinkIcon/>}/>
         <Tab label="Security" icon={<SecurityIcon/>}/>
       </Tabs>
-
-      
           <Box>
-          {
-            value === 2 && (
+          {value === 2 && (
               <List className={classes.root}>
                     <ListItem button>
                       <ListItemAvatar>
@@ -241,10 +206,8 @@ export default function FullScreenDialog() {
                   </ListItem>
                   </List>
             
-            )
-          }
-          {
-            value === 0 && (
+            )}
+          {value === 0 && (
               <Box>
                   <List className={classes.root}>
                     <ListItem button>
@@ -311,10 +274,8 @@ export default function FullScreenDialog() {
                   </ListItem>
                   </List>
               </Box>
-            )
-          }
-          {
-            value === 3 &&(
+            )}
+          {value === 3 &&(
               <ListItem button>
                 <ListItemAvatar>
                   <Avatar>
@@ -326,10 +287,8 @@ export default function FullScreenDialog() {
                   <EditIcon />
                 </IconButton>
             </ListItem>
-            )
-          }
-          {
-            value === 1 && (
+            )}
+          {value === 1 && (
               <ListItem button>
                 <ListItemAvatar>
                   <Avatar>
@@ -341,8 +300,7 @@ export default function FullScreenDialog() {
                   <EditIcon />
                 </IconButton>
             </ListItem>
-            )
-          }
+            )}
           <Menu
             id="link-menu"
             anchorEl={anchorEl}
@@ -355,8 +313,6 @@ export default function FullScreenDialog() {
             </Menu>
         </Box>
     </Paper>
-
-    
   </Dialog>
     </div>
   );
