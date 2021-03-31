@@ -18,6 +18,7 @@
     "firebase-tools": "^7.2.4",
     "firebaseui": "^4.7.3",
     "firechat": "^3.0.1",
+    "material-auto-rotating-carousel": "^3.0.2",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.1",

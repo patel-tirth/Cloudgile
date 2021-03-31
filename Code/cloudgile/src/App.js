@@ -23,6 +23,7 @@ import { Manage } from './components/Manage';
 import CloudgileProject from './components/Cloudgileproject';
 import ChatRoom from './components/ChatRoom';
 import NewChatRoom from './components/NewChatRoom';
+import { Tutorial } from './components/Tutorial';
 
 function App() {
   const { isLoading, user } = useAuth();
@@ -39,12 +40,14 @@ function App() {
         <ProtectedRoute path="/profile" isLoading={isLoading} isAuthed={!!user}><Profile/></ProtectedRoute>
         <ProtectedRoute path="/projects/:projectID/" isLoading={isLoading} isAuthed={!!user} children={<CloudgileProject />}></ProtectedRoute>
         <ProtectedRoute path="/projects/:projectID/manage" isLoading={isLoading} isAuthed={!!user}><Manage/></ProtectedRoute>
+        <ProtectedRoute path="/tutorial" isLoading={isLoading} isAuthed={!!user}><Tutorial/></ProtectedRoute>
         {/* <ProtectedRoute path="/Chat/:projectID" isLoading={isLoading} isAuthed={!!user} children={<ChatRoom />}></ProtectedRoute> */}
         {/* <ProtectedRoute path="/projects/projectID/members" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         {/* <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         <ProtectedRoute path="/Chat" isLoading={isLoading} isAuthed={!!user} children={<NewChatRoom />}></ProtectedRoute>
         <ProtectedRoute path="/settings" isLoading={isLoading} isAuthed={!!user}><Settings/></ProtectedRoute>
         <ProtectedRoute path="/signOut" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
+        
         <Redirect to="/dashboard"/>
       </Switch>
     </Router>

@@ -25,7 +25,8 @@ import { useEffect } from 'react';
 import { getAllProjects } from '../Data/Projects';
 import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
-;
+import { Tutorial } from './Tutorial';
+import Button from "@material-ui/core/Button";
 
 const drawerWidth = 240;
 
@@ -120,6 +121,7 @@ export default function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([])
+  
 
   useEffect(() => {
     loadData();
@@ -195,7 +197,7 @@ export default function Dashboard(props) {
           <div style={{marginLeft: 'auto'}}></div>
         </section>
         <CollapsibleTable rows={rows}/>
-
+       
         <NewProject loadData={() => loadData()} />
       </main>
     </div>
