@@ -8,24 +8,9 @@ import "../css/SignUpForm.css";
 
 import { signInWithGoogle } from '../auth/signInWithGoogle';
 import { getCurrentUser } from "../auth";
-import { signOut } from '../auth/signOut'
 import { signUp } from "../auth/signUp";
 import DividerLine from "../util/DividerLine";
 import { createUser } from "../auth/createUser";
-
-
-function renderLoggedIn() {
-    return (
-        <div className="loggedIn-wrapper">
-            <h1>Welcome to Cloudgile!</h1>
-            <div>
-                <Button onClick={() => signOut()}>
-                    Log out
-        </Button>
-            </div>
-        </div>
-    );
-}
 
 function SignUpForm() {
     const [user, setUser] = useState(getCurrentUser());
@@ -59,7 +44,8 @@ function SignUpForm() {
     const onSignUpWithEmailPassword = async () => {
         try {
             await signUp(loginEmail, passOne, firstName + lastName);
-            history.push("/")
+            history.push("/");
+            createUser(getCurrentUser().id)
         } catch (e) {
             setErrorMessage(e.message);
         }
@@ -84,7 +70,7 @@ function SignUpForm() {
                 </div>
                 <CardContent>
                     {user ? (
-                        renderLoggedIn()
+                        history.push('/dashboard')
                     ) : (
                         <section>
                             <form onSubmit={onFormSubmit}>

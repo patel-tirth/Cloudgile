@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +15,9 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import { getUserFromId } from '../auth/getUserFromId';
+import { Tooltip } from '@material-ui/core';
 
 const useRowStyles = makeStyles({
   root: {
@@ -31,26 +34,36 @@ const useRowStyles = makeStyles({
 function Row(props) {
   const history = useHistory();
   const { row } = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const classes = useRowStyles();
-
   const handleCellClick = (e) => {
     e.preventDefault()
-   history.push(`/projects/${row.id}`);
-}
+    history.push(`/projects/${row.id}`);
+  }
+  
   return (
-    <React.Fragment>
-      <TableRow className={classes.root} onClick={handleCellClick} button>
-        <TableCell>
-          {row.issues && <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+    <Fragment>
+      <TableRow className={classes.root} button>
+        <TableCell component="th" scope="row" onClick={handleCellClick}>{row.name}</TableCell>
+        <TableCell align="right" onClick={handleCellClick}>{row.type}</TableCell>
+        <TableCell align="right" onClick={handleCellClick}>{row.leadName}</TableCell>
+        <TableCell align="right" onClick={handleCellClick}>{row.category}</TableCell>
+        <TableCell align="right" onClick={handleCellClick}>{row.id}</TableCell>
+        <TableCell align="right">
+          <Tooltip title="Copy ID to clipboard">
+            <AssignmentIcon style={{ color: 'black' }}/>
+          </Tooltip>
+          { <IconButton aria-label="expand row" size="small" style={{marginLeft: 10}} onClick={() => setOpen(!open)}>
+            {open ? 
+            <Tooltip title="Shrink">
+              <KeyboardArrowUpIcon  style={{color: 'black'}}/>
+            </Tooltip>
+            : 
+            <Tooltip title="expand">
+              <KeyboardArrowDownIcon  style={{color: 'black'}}/>
+            </Tooltip>}
           </IconButton>}
         </TableCell>
-        <TableCell component="th" scope="row">{row.name}</TableCell>
-        <TableCell align="right">{row.type}</TableCell>
-        <TableCell align="right">{row.lead}</TableCell>
-        <TableCell align="right">{row.category}</TableCell>
-        <TableCell align="right">{row.URL}</TableCell>
       </TableRow>
       {row.issues && <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -65,16 +78,24 @@ function Row(props) {
                     <TableCell>Issue</TableCell>
                     <TableCell>Created On</TableCell>
                     <TableCell>Updated On</TableCell>
-                    <TableCell>Updated By</TableCell>
+                    <TableCell>Complete By</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.issues.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">{historyRow.issueName}</TableCell>
-                      <TableCell>{historyRow.updatedOn}</TableCell>
-                      <TableCell>{historyRow.updatedBy}</TableCell>
-                      <TableCell>{historyRow.createdOn}</TableCell>
+                  {row.backlog.map((issue) => (
+                    <TableRow>
+                      <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
+                      <TableCell>{row.issues[issue].createdOn}</TableCell>
+                      <TableCell>{row.issues[issue].updatedOn}</TableCell>
+                      <TableCell>{row.issues[issue].completeBy}</TableCell>
+                    </TableRow>
+                  ))}
+                  {false && row.timeline.map((issue) => (
+                    <TableRow>
+                      <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
+                      <TableCell>{row.issues[issue].createdOn}</TableCell>
+                      <TableCell>{row.issues[issue].updatedOn}</TableCell>
+                      <TableCell>{row.issues[issue].completeBy}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -83,7 +104,7 @@ function Row(props) {
           </Collapse>
         </TableCell>
       </TableRow>}
-    </React.Fragment>
+    </Fragment>
   );
 }
 
@@ -107,24 +128,26 @@ Row.propTypes = {
 
 export default function CollapsibleTable(props) {  
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Project name</TableCell>
-            <TableCell align="right">Project type</TableCell>
-            <TableCell align="right">Project lead</TableCell>
-            <TableCell align="right">Project category</TableCell>
-            <TableCell align="right">URL</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.rows.length > 0 && props.rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <section style={{ padding: '0px 10px' }}>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Project name</TableCell>
+              <TableCell align="right">Project type</TableCell>
+              <TableCell align="right">Project lead</TableCell>
+              <TableCell align="right">Project category</TableCell>
+              <TableCell align="right">ID</TableCell>
+              <TableCell align="right">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props.rows.length > 0 && props.rows.map((row) => (
+              <Row key={row.name} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </section>
   );
 }

@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Settings = () => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const handleDrawerOpen = () => {
         setOpen(true);

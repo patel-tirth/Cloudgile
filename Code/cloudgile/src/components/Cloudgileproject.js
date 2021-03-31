@@ -1,13 +1,8 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 
-import { getCurrentUser } from "../auth";
 import Backlog from './Backlog';
-// import { getAllUsers }  from '../auth';
+import Timeline from './Timeline';
 import { useState } from "react";
-
-import { signOut } from "../auth/signOut";
-import { Button } from "semantic-ui-react";
-import { auth } from "../firebase";
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,23 +14,29 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
+import { useParams } from 'react-router';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './ProjectDashboardListItems';
+import { mainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
 import { SearchBar } from './SearchBar';
-import GithubApi from "./Github";
 import '../App.css';
+import { getProject } from '../data/Projects/getProject';
+import { getCurrentUser } from '../auth';
+import NotificationToggle from './NotificationToggle';
+import PersonIcon from '@material-ui/icons/Person';
+import { grey } from '@material-ui/core/colors';
 import NewIssue from './CreateNewIssue';
-
-
+import { Tooltip } from '@material-ui/core';
+import { Fab } from '@material-ui/core';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import { getUserForProject } from '../auth/getUserFromId';
+import ViewListIcon from '@material-ui/icons/ViewList';
+import TimelineIcon from '@material-ui/icons/Timeline';
 
 const drawerWidth = 240;
 
@@ -55,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     marginRight: 'auto',
-    marginLeft: 'auto',
+    // marginLeft: 'auto',
+    textTransform: 'uppercase',
     ...theme.mixins.toolbarHeading
   },
   appBar: {
@@ -119,14 +121,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height: 'auto',
   },
 }));
 
 export default function CloudgileProject() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-
+  const [open, setOpen] = useState(false);
+  const [project, setProject] = useState(null)
+  const {projectID} = useParams()
+  const [refresh, setRefresh] = useState(false)
+  const [users, setUsers] = useState(null)
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -135,120 +141,111 @@ export default function CloudgileProject() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-         
-          <Typography style={{marginLeft:300}} component="h1" center variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            Cloudgile
-          </Typography>
-          <div style={{marginLeft:300}}>     <SearchBar /></div>
-     
-          <IconButton color="inherit">
-            <Badge style={{marginLeft:300}} badgeContent={2} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton> 
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarHeading}>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            DASHBOARD MENU
-          </Typography>
-          <div>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
+  const loadData = async () => {
+    let data = await getProject(getCurrentUser().id, projectID)
+    setProject(data)
+  }
 
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        
-      
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            
-            <Grid item  xs={12} md={8} lg={12}>
-              <Paper className={fixedHeightPaper}>
-               
-             
-                <Title>Product Backlog</Title>
-                     <Backlog/>
-               
-              </Paper>
-            </Grid>
-         
-            <Grid item xs={12} md={8} lg={12}>
-              <Paper className={fixedHeightPaper}>
-         
-                <Title>Timeline</Title>
-              </Paper>
-            </Grid>
-{/*     
-            <Grid item xs={12} md={4} lg={4}>
-            <Paper className={fixedHeightPaper}>
-            
-                <Title>Search Engine</Title>
-              </Paper>
-            </Grid> */}
-          </Grid>
-          <Grid container spacing={3} mt={4}>
-            
-            {/* <Grid item  xs={12} md={4} lg={4} >
-              <Paper className={fixedHeightPaper}>
-       
-                <Title>Chat</Title>
-              </Paper>
-            </Grid> */}
-      
-            {/* <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-             
-                <Title>Github</Title>
-           
-              </Paper>
-            </Grid>
-        */}
-            {/* <Grid item xs={12} md={4} lg={4}>
-            <Paper className={fixedHeightPaper}>
-            
-                <Title>Reminder</Title>
-              </Paper>
-            </Grid> */}
-          </Grid>
-          {/* <div> <NewIssue/></div> */}
-          {/* <Backlog/>   */}
-        </Container>
-      </main> 
-      {/* <div className='githubApi'>
-      <GithubApi/> */}
-     
-     
-      {/* </div> */}
-      
-    </div>
+  const loadUsers = async () => {
+    let data = await getUserForProject(project.users)
+    setUsers(data)
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  useEffect(() => {
+    if (project){
+      loadUsers(project.users)
+    }
+  }, [project])
+
+  const refreshProjects = useCallback(async () => {
+      await loadData()
+      setRefresh(!refresh)
+    }, [refresh])
+
+  return (
+    <>
+      {
+        project && users ? 
+          <div className={classes.root}>
+            <Tooltip arrow title="Refresh" placement="left">
+              <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={refreshProjects}>
+                <RefreshIcon />
+              </Fab>
+            </Tooltip>
+            <NewIssue refresh={refreshProjects}/>
+            <CssBaseline />
+            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+              <Toolbar className={classes.toolbar}>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen}
+                  className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                >
+                  <MenuIcon />
+                </IconButton>
+
+                <Typography component="h1" align="center" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                  {project.name}
+                </Typography>
+                <div>
+                  <SearchBar />
+                </div>
+                <NotificationToggle/>
+                <IconButton>
+                  <PersonIcon style={{ color: grey[50] }} />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+            <Drawer
+              variant="permanent"
+              classes={{
+                paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+              }}
+              open={open}
+            >
+              <div className={classes.toolbarHeading}>
+                <Typography component="h1" variant="h6" color="inherit" noWrap>
+                  DASHBOARD MENU
+                </Typography>
+                <div>
+                  <IconButton onClick={handleDrawerClose}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </div>
+              </div>
+              <Divider />
+              <List>{mainListItems}</List>
+              <Divider />
+            </Drawer>
+            <main className={classes.content}>
+              <div className={classes.appBarSpacer} />
+              <Container maxWidth="lg" className={classes.container}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={8} lg={12}>
+                    <Paper className={fixedHeightPaper}>
+                      <Title align="left"><ViewListIcon style={{margin: '0 10 2 0'}}/>Product Backlog</Title>
+                      <Backlog project={project} users={users} refresh={refreshProjects}/>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item xs={12} md={8} lg={12}>
+                    <Paper className={fixedHeightPaper}>
+                      <Title align="left"><TimelineIcon style={{ margin: '0 10 2 0' }}/>Timeline</Title>
+                      <Timeline project={project} users={users} refresh={refreshProjects}/>
+                    </Paper>
+                  </Grid>
+                </Grid>
+              </Container>
+            </main>
+          </div>
+        : null
+      }
+    </>
   );
 }
