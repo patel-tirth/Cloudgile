@@ -25,7 +25,7 @@ import { mainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
 import { SearchBar } from './SearchBar';
 import '../App.css';
-import { getProject } from '../data/Projects/getProject';
+import { getProject } from '../Data/Projects/getProject';
 import { getCurrentUser } from '../auth';
 import NotificationToggle from './NotificationToggle';
 import PersonIcon from '@material-ui/icons/Person';
@@ -37,6 +37,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import { getUserForProject } from '../auth/getUserFromId';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import TimelineIcon from '@material-ui/icons/Timeline';
+import ProjectDetails from './ProjectDetails';
 
 const drawerWidth = 240;
 
@@ -227,14 +228,19 @@ export default function CloudgileProject() {
               <div className={classes.appBarSpacer} />
               <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} md={8} lg={12}>
+                  <Grid item xs={12} md={8} lg={9}>
                     <Paper className={fixedHeightPaper}>
                       <Title align="left"><ViewListIcon style={{margin: '0 10 2 0'}}/>Product Backlog</Title>
                       <Backlog project={project} users={users} refresh={refreshProjects}/>
                     </Paper>
                   </Grid>
+                  <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                      <ProjectDetails/>
+                    </Paper>
+                  </Grid>
 
-                  <Grid item xs={12} md={8} lg={12}>
+                  <Grid item xs={12} md={8} lg={9}>
                     <Paper className={fixedHeightPaper}>
                       <Title align="left"><TimelineIcon style={{ margin: '0 10 2 0' }}/>Timeline</Title>
                       <Timeline project={project} users={users} refresh={refreshProjects}/>

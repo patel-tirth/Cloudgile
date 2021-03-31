@@ -10,8 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import { Button, IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { closeIssue } from '../data/Scrum/closeIssue';
-import { repoenIssue } from '../data/Scrum/repoenIssue'
+import { closeIssue } from '../Data/Scrum/closeIssue';
+import { repoenIssue } from '../Data/Scrum/repoenIssue'
 import { Modal } from 'react-bootstrap';
 
 const useRowStyles = makeStyles({

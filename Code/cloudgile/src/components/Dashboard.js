@@ -22,7 +22,7 @@ import { mainListItems } from './listItems';
 
 import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
-import { getAllProjects } from '../data/Projects';
+import { getAllProjects } from '../Data/Projects';
 import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 ;

@@ -11,7 +11,7 @@ import { Button, IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'; 
 import EditIcon from '@material-ui/icons/Edit';
-import {closeIssue} from '../data/Scrum/closeIssue'
+import {closeIssue} from '../Data/Scrum/closeIssue'
 import { Modal } from 'react-bootstrap';
  
 const useRowStyles = makeStyles({

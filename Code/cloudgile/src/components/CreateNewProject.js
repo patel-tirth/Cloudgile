@@ -5,8 +5,8 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import uuid from 'react-uuid'
 import { getCurrentUser } from '../auth';
-import { CreateProject } from '../data/Scrum/CreateProject';
-import { addUserToProject } from '../data/Projects';
+import { CreateProject } from '../Data/Scrum/CreateProject';
+import { addUserToProject } from '../Data/Projects';
 import { Fab } from '@material-ui/core';
 import AddIcon  from '@material-ui/icons/Add';
 
