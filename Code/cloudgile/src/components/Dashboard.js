@@ -1,15 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getCurrentUser } from "../auth";
 import CollapsibleTable from './projectList';
 import NewProject from './CreateNewProject';
-
-import { useState } from "react";
-import PropTypes from "prop-types";
-import { signOut } from "../auth/signOut";
-import { Button } from "semantic-ui-react";
-import { auth } from "../firebase";
-
-
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,18 +12,19 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-
 import NotificationToggle from './NotificationToggle';
-import { mainListItems, secondaryListItems } from './listItems';
-
+import { MainListItems } from './listItems';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
-import { getAllProjects } from '../Data/Projects';
+import { getAllProjects } from '../data/Projects';
+import PersonIcon from '@material-ui/icons/Person';
+import { grey } from '@material-ui/core/colors';
+import { Tutorial } from './Tutorial';
+import { Fab, Tooltip } from '@material-ui/core';
+import { getUserForProject } from '../auth/getUserFromId';
 
 const drawerWidth = 240;
 
@@ -51,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     marginRight: 'auto',
-    marginLeft: 'auto',
+    // marginLeft: 'auto',
+    textTransform: 'uppercase',
     ...theme.mixins.toolbarHeading
   },
   appBar: {
@@ -81,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
+    height: '100vh',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -101,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
+    // height: '100vh',
     overflow: 'auto',
   },
   container: {
@@ -120,22 +115,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard(props) {
-  const { messages } = props;
 
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const [form, setForm] = React.useState(false);
-  const [show, setShow] = React.useState(false);
-  const [rows, setRows] = React.useState([])
-  const [refresh, setRefresh] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  const [rows, setRows] = useState([])
+  const [firstTime, setFirstTime] = useState(false)
+  const current = getCurrentUser().id
+  
   useEffect(() => {
     loadData();
   }, [])
 
   const loadData = async () => {
-    const result = await getAllProjects(getCurrentUser().id);
+    const result = await getAllProjects(current);
+    const firstUser = await getUserForProject([current])
     setRows(result)
+    setFirstTime(firstUser[current].firstUser)
   };
 
   const handleDrawerOpen = () => {
@@ -145,9 +140,22 @@ export default function Dashboard(props) {
     setOpen(false);
   };
   
+  const refreshProjects = () => {
+    console.log('refresh')
+    loadData()
+  }
+
   return (    
     <div className={classes.root}>
+
+      {firstTime && <Tutorial/>}
      
+      <Tooltip arrow title="Refresh" placement="left">
+        <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={() => refreshProjects()}>
+          <RefreshIcon />
+        </Fab>
+      </Tooltip>
+
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
       
@@ -160,19 +168,16 @@ export default function Dashboard(props) {
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}>
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+            DASHBOARD
           </Typography>
-  
-          <Typography  color="inherit" noWrap className={classes.title}>
-           Welcome {getCurrentUser().email}
-          </Typography>
-          <SearchBar />
-          <IconButton color="inherit">
-            <Badge badgeContent={2} color="secondary">
-              <NotificationToggle messages = {messages}/>
-            </Badge>
-          </IconButton> 
+          <div>
+            <SearchBar />
+          </div>
+          <NotificationToggle/>
+          <IconButton>
+            <PersonIcon style={{ color: grey[50] }}/>
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -183,7 +188,7 @@ export default function Dashboard(props) {
         open={open}>
         <div className={classes.toolbarHeading}>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            DASHBOARD MENU
+            MENU
           </Typography>
           <div>
             <IconButton onClick={handleDrawerClose}>
@@ -192,23 +197,23 @@ export default function Dashboard(props) {
           </div>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <MainListItems/>
+        </List>
         <Divider />
 
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Typography component="h1" variant="h6" color="blue" noWrap align="center" >
+        <section className="d-inline-flex w-100" style={{ padding: '15px'}}>
+          <Typography variant="h4" color="secondary" noWrap align="left" style={{textTransform: 'uppercase', fontWeight: '500' }}>
             Your Projects
-        </Typography>
+          </Typography>
+          <div style={{marginLeft: 'auto'}}></div>
+        </section>
         <CollapsibleTable rows={rows}/>
-        <div style={{ marginTop: 10 }}><NewProject loadData={() => loadData()}/></div>
+       
+        <NewProject loadData={() => loadData()} />
       </main>
-     
     </div>
   );
 }
-
-Dashboard.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
-};

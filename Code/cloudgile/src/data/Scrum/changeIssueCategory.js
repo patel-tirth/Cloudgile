@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
 
-export const createIssue = async (project_id, issue, issue_id) => {
+export const changeIssueCategory = async (project_id, issue, issue_id) => {
     await firebase.database().ref('projects/' + project_id).once('value', snapshot => {
         const numIssues = snapshot.child('numIssues').val()
         snapshot.ref.child('issues/' + issue_id).set(issue)
@@ -19,5 +19,5 @@ export const createIssue = async (project_id, issue, issue_id) => {
         }
     }, (error) => {
         throw new Error(error)
-    }) ;
+    });
 }

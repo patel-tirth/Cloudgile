@@ -1,19 +1,18 @@
 import React, { Fragment, useState, useRef, useCallback } from "react";
 import PropTypes from "prop-types";
+import { grey } from '@material-ui/core/colors';
 import {
   Popover,
   IconButton,
   AppBar,
   List,
   Divider,
-  ListItem,
-  ListItemText,
   Typography,
   Box,
   withStyles,
+  Badge,
 } from "@material-ui/core";
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MessageListItem from "./NotificationItem";
 
 const styles = (theme) => ({
   tabContainer: {
@@ -38,7 +37,8 @@ const styles = (theme) => ({
 });
 
 function NotificationToggle(props) {
-  const { classes, messages } = props;
+  const { classes } = props;
+  const [messages, setMessages] = useState([])
   const anchorEl = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -58,10 +58,12 @@ function NotificationToggle(props) {
         buttonRef={anchorEl}
         aria-label="Open Messages"
         aria-describedby={id}
-        color="#FFFFFF"
-      >
-        <NotificationsIcon />
+        style={{marginLeft: 'auto'}}>
+        <Badge badgeContent={messages.length} color="secondary">
+          <NotificationsIcon style={{ color: grey[50] }}/>
+        </Badge>
       </IconButton>
+      
       <Popover
         disableScrollLock
         id={id}
@@ -69,7 +71,7 @@ function NotificationToggle(props) {
         anchorEl={anchorEl.current}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "center",
         }}
         transformOrigin={{
           vertical: "top",
@@ -80,7 +82,7 @@ function NotificationToggle(props) {
       >
         <AppBar position="static" color="inherit" className={classes.noShadow}>
           <Box pt={1} pl={2} pb={1} pr={1}>
-            <Typography variant="subtitle1">Messages</Typography>
+            <Typography variant="subtitle1" align="center">MESSAGES</Typography>
           </Box>
           <Divider className={classes.divider} />
         </AppBar>
@@ -103,6 +105,7 @@ function NotificationToggle(props) {
               />
             ))
           )} */}
+          {/* {(messages === null || messages.length === 0) ? null:null} */}
         </List>
       </Popover>
     </Fragment>
@@ -111,7 +114,7 @@ function NotificationToggle(props) {
 
 NotificationToggle.propTypes = {
   classes: PropTypes.object.isRequired,
-  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  // messages: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(NotificationToggle);

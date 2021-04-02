@@ -10,6 +10,7 @@ export const createUser = async (userid) => {
             else {
                 snapshot.ref.update(getCurrentUser())
                 snapshot.ref.child('numProjects').set(0)
+                snapshot.ref.child('firstUser').set(true)
             }
         }, error => {
             throw new Error(error.message);
