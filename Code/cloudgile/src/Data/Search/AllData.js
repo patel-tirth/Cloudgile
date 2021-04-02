@@ -1,7 +1,6 @@
-import React from 'react'
+import firebase from 'firebase/app'
+import 'firebase/database'
 
-export const AllData = (uid) => {
-    return (
-        []
-    )
+export const AllData = () => {
+    return null;
 }
