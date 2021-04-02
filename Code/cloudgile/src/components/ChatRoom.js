@@ -6,18 +6,15 @@ import 'firebase/auth';
 import 'firebase/analytics';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import SendIcon from '@material-ui/icons/Send';
-import { Box, Container, IconButton } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import { Button, Form } from 'react-bootstrap';
-import { useParams } from 'react-router';
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-
-export function ChatRoom(props) {
+export function ChatRoom({projectID}) {
   const dummy = useRef();
-  const projectID = useParams();
-  const messagesRef = firestore.collection('messages');
+  const messagesRef = firestore.collection('rooms').doc(projectID).collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(25);
   const [messages] = useCollectionData(query, { idField: 'id' });
   const [formValue, setFormValue] = useState('');

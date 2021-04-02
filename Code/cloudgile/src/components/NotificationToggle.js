@@ -7,15 +7,12 @@ import {
   AppBar,
   List,
   Divider,
-  ListItem,
-  ListItemText,
   Typography,
   Box,
   withStyles,
   Badge,
 } from "@material-ui/core";
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MessageListItem from "./NotificationItem";
 
 const styles = (theme) => ({
   tabContainer: {

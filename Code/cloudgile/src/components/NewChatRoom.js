@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import { getCurrentUser } from "../auth";
-import CollapsibleTable from './projectList';
-import NewProject from './CreateNewProject';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,11 +14,12 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationToggle from './NotificationToggle';
 import { MainListItems } from './listItems';
 import { SearchBar } from './SearchBar';
-import { useEffect } from 'react';
-import { getAllProjects } from '../data/Projects';
 import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 import { ChatRoom } from './ChatRoom';
+import { Redirect, useParams } from 'react-router';
+import { getProject } from '../data/Projects';
+import { getCurrentUser } from '../auth';
 
 const drawerWidth = 240;
 
@@ -111,11 +109,27 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NewChatRoom(props) {
-
+export default function NewChatRoom() {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
-    const [rows, setRows] = useState([])
+    const [open, setOpen] = useState(false); 
+    const [project, setProject] = useState(null)
+    const { projectID } = useParams();
+    
+    const loadData = async () => {
+        let data = await getProject(getCurrentUser().id, projectID)
+        setProject(data)
+    }
+
+    const checkAllow = () => {
+        if (project && project.users.includes(getCurrentUser().id)) {
+            <Redirect to="/dashboard"/>
+        }
+    }
+
+    useEffect(() => {
+        loadData()
+        checkAllow()
+    }, [])
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -125,7 +139,9 @@ export default function NewChatRoom(props) {
     };
 
     return (
-        <div className={classes.root}>
+        <>
+            { project === false ? <Redirect to="/dashboard"/> :
+            <div className={classes.root}>
             <CssBaseline />
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
@@ -169,7 +185,8 @@ export default function NewChatRoom(props) {
                 </List>
                 <Divider />
             </Drawer>
-            <main className={classes.content}><ChatRoom /></main>
-        </div>
+            <main className={classes.content}><ChatRoom projectID={projectID}/></main>
+        </div>}    
+        </>
     );
 }

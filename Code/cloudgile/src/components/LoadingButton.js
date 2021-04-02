@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import { render } from "react-dom";
 
 function simulateNetworkRequest() {
     return new Promise((resolve) => setTimeout(resolve, 2000));

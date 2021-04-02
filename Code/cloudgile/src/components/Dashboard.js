@@ -23,8 +23,8 @@ import { getAllProjects } from '../data/Projects';
 import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 import { Tutorial } from './Tutorial';
-import Button from "@material-ui/core/Button";
 import { Fab, Tooltip } from '@material-ui/core';
+import { getUserForProject } from '../auth/getUserFromId';
 
 const drawerWidth = 240;
 
@@ -119,14 +119,18 @@ export default function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([])
+  const [firstTime, setFirstTime] = useState(false)
+  const current = getCurrentUser().id
   
   useEffect(() => {
     loadData();
   }, [])
 
   const loadData = async () => {
-    const result = await getAllProjects(getCurrentUser().id);
+    const result = await getAllProjects(current);
+    const firstUser = await getUserForProject([current])
     setRows(result)
+    setFirstTime(firstUser[current].firstUser)
   };
 
   const handleDrawerOpen = () => {
@@ -143,6 +147,8 @@ export default function Dashboard(props) {
 
   return (    
     <div className={classes.root}>
+
+      {firstTime && <Tutorial/>}
      
       <Tooltip arrow title="Refresh" placement="left">
         <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={() => refreshProjects()}>

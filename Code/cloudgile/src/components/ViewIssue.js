@@ -8,7 +8,6 @@ export const ViewIssue = (props) => {
         <Modal
             show={props.show}
             onHide={props.close}
-            // backdrop="static"
             keyboard={false}
             centered
         >

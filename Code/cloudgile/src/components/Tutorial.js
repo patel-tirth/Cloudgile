@@ -1,41 +1,37 @@
-// import React from 'react';
-// import { AutoRotatingCarousel, Slide } from "material-auto-rotating-carousel";
-
-
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { red, blue, green } from "@material-ui/core/colors";
 import { AutoRotatingCarousel, Slide } from "material-auto-rotating-carousel";
-import { useHistory } from 'react-router-dom';
+import dashboardImg from '../img/dashboard.png'
+import { Image } from "react-bootstrap";
+import { getCurrentUser } from "../auth";
+import firebase from 'firebase/app';
+
 export const Tutorial = () => {
-    let open = true;
-    const history = useHistory();
-   function setHandleOpen(){
-        open = true
-    }
-    function setHandleClose(){
-        open = false
-        history.push('/dashboard');
-    }
+  const [open, setOpen] = useState(true)
   
+  const handleClose = async () => {
+    await firebase.database().ref('users/' + getCurrentUser().id + '/firstUser').set(false)
+    setOpen(false)
+  }
+
   return (
     <div>
       <AutoRotatingCarousel
         label= "Get started"
-        // ButtonProps = "Get started"
+        ButtonProps = "Get started"
         open={open} 
-        onClose={() => setHandleClose() }
-        onStart={() => setHandleOpen()}
+        onStart={() => handleClose()}
         autoplay={false}
         style={{ position: "absolute" }}
        
-      >
-        
+      >    
         <Slide
           media={
-            <img src="../img/dashboard.png" />
+            <Image
+              style={{borderRadius: 0, height: 400, width: 600}}
+              src={dashboardImg}
+              fluid
+            />
           }
           mediaBackgroundStyle={{ backgroundColor: red[400] }}
           style={{ backgroundColor: red[600] }}
@@ -44,7 +40,11 @@ export const Tutorial = () => {
         />
         <Slide
           media={
-            <img src="http://www.icons101.com/icon_png/size_256/id_80975/GoogleInbox.png" />
+            <Image
+              style={{ borderRadius: 0, height: 400, width: 600 }}
+              src={dashboardImg}
+              fluid
+            />
           }
           mediaBackgroundStyle={{ backgroundColor: blue[400] }}
           style={{ backgroundColor: blue[600] }}
@@ -53,7 +53,11 @@ export const Tutorial = () => {
         />
         <Slide
           media={
-            <img src="http://www.icons101.com/icon_png/size_256/id_76704/Google_Settings.png" />
+            <Image
+              style={{ borderRadius: 0, height: 400, width: 600 }}
+              src={dashboardImg}
+              fluid
+            />
           }
           mediaBackgroundStyle={{ backgroundColor: green[400] }}
           style={{ backgroundColor: green[600] }}

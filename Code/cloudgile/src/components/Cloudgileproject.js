@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, {useEffect } from 'react';
 
 import Backlog from './Backlog';
 import Timeline from './Timeline';
@@ -21,7 +21,7 @@ import { Redirect, useParams } from 'react-router';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems } from './ProjectDashboardListItems';
+import { MainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
 import { SearchBar } from './SearchBar';
 import '../App.css';
@@ -132,7 +132,6 @@ export default function CloudgileProject() {
   const [open, setOpen] = useState(false);
   const [project, setProject] = useState(null)
   const {projectID} = useParams()
-  // const [refresh, setRefresh] = useState(false)
   const [users, setUsers] = useState(null)
   
   const handleDrawerOpen = () => {
@@ -222,7 +221,9 @@ export default function CloudgileProject() {
                 </div>
               </div>
               <Divider />
-              <List>{mainListItems}</List>
+              <List>
+                <MainListItems projectID={projectID}/>
+              </List>
               <Divider />
             </Drawer>
             <main className={classes.content}>
