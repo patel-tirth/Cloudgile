@@ -42,11 +42,11 @@ export const mainListItems = (
         <ListItemText primary="settings" />
       </ListItem>
     </Link>
-    <ListItem button>
+    <ListItem button onClick={() => signOut()}>
       <ListItemIcon>
         <ExitToAppIcon />
       </ListItemIcon>
-      <ListItemText  primary="Log Out" onClick={()=>signOut()} />  
+      <ListItemText  primary="Log Out"  />  
     </ListItem>
   </div>
 );

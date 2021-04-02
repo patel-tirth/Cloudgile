@@ -10,8 +10,11 @@ import Paper from '@material-ui/core/Paper';
 import { Button, IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'; 
 import EditIcon from '@material-ui/icons/Edit';
-import {closeIssue} from '../Data/Scrum/closeIssue'
+import {closeIssue} from '../data/Scrum/closeIssue'
 import { Modal } from 'react-bootstrap';
+import { EditIssue } from './EditIssue';
+import { getCurrentUser } from '../auth';
+import { ViewIssue } from './ViewIssue';
  
 const useRowStyles = makeStyles({
   root: {
@@ -43,17 +46,30 @@ export default function Backlog ({project, users, refresh}) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [editShow, setEditShow] = useState(false)
+  const [viewIssue, setViewIssue] = useState(false)
+  const [currentIssue, setCurrentIssue] = useState(null)
+
+  const current = getCurrentUser().id
+
+  const handleEdit = (e, issue) => {
+    e.preventDefault()
+    setCurrentIssue(issue)
+    setEditShow(true)
+  }
 
   const closeThisIssue = (issue, key) => {
     closeIssue(project.id, issue, key)
     refresh()
     handleClose()
   }
-  const handleCellClick = (id) => {
-    console.log(id)
+  const handleCellClick = (e, issue) => {
+    setCurrentIssue(issue)
+    setViewIssue(true)
   }
 
   return (
+    <>
     <TableContainer component={Paper}>
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
@@ -70,55 +86,59 @@ export default function Backlog ({project, users, refresh}) {
               return (
                 <>
                 <TableRow key={key} className={classes.root}>
-                  <TableCell onClick={() => handleCellClick(issue)} style={{}} component="th" scope="row">
+                  <TableCell onClick={(e) => handleCellClick(e, issue)} style={{}} component="th" scope="row">
                     {project.issues[issue].title}
                   </TableCell>
-                  <TableCell onClick={() => handleCellClick(issue)} style={{ backgroundColor: getColor(project.issues[issue].priority), padding: 1, textTransform: 'uppercase' }} align="center">
+                  <TableCell onClick={(e) => handleCellClick(e, issue)} style={{ backgroundColor: getColor(project.issues[issue].priority), padding: 1, textTransform: 'uppercase' }} align="center">
                     {project.issues[issue].priority}
                   </TableCell>
-                  <TableCell onClick={() => handleCellClick(issue)} align="right" style={{}}>
+                  <TableCell onClick={(e) => handleCellClick(e, issue)} align="right" style={{}}>
                     {users[project.issues[issue].assignedTo].name}
                   </TableCell>
-                  <TableCell onClick={() => handleCellClick(issue)} align="right" style={{}}>
+                  <TableCell onClick={(e) => handleCellClick(e, issue)} align="right" style={{}}>
                     {project.issues[issue].completeBy}
                   </TableCell>
 
                   <TableCell align="right">
-                    <IconButton aria-label="expand row" size="small">
+                      {(current === (project.issues[issue].assignedTo) || (current === project.leadId)) &&
+                      <>
+                      <IconButton aria-label="expand row" size="small" onClick={(e) => handleEdit(e, issue)}>
                       <Tooltip title="Edit Issue">
                         <EditIcon color="primary"/>
                       </Tooltip>
-                    </IconButton>
+                      </IconButton>
 
-                    <IconButton aria-label="expand row" size="small" style={{ marginLeft: 10 }} onClick={() => handleShow()}>
+                      <IconButton aria-label="expand row" size="small" style={{ marginLeft: 10 }} onClick={() => handleShow()}>
                       <Tooltip title="Close Issue">
                         <CheckCircleIcon style={{color: 'green'}}/>
                       </Tooltip>
-                    </IconButton>
+                      </IconButton>
+                      </>
+                    }
                   </TableCell>
                 </TableRow>
 
-                  <Modal
-                    key={'modal'.concat(key.toString())}
-                    show={show}
-                    onHide={handleClose}
-                    backdrop="static"
-                    keyboard={false}
-                    centered
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title>Close Issue</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      Are you sure?
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
-                        No
-                      </Button>
-                      <Button variant="primary" onClick={() => closeThisIssue(issue, key)}>Yes</Button>
-                    </Modal.Footer>
-                  </Modal>
+                <Modal
+                  key={'modal'.concat(key.toString())}
+                  show={show}
+                  onHide={handleClose}
+                  backdrop="static"
+                  keyboard={false}
+                  centered
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Close Issue</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    Are you sure?
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="contained" onClick={handleClose}>
+                      No
+                    </Button>
+                    <Button variant="contained" onClick={() => closeThisIssue(issue, key)}>Yes</Button>
+                  </Modal.Footer>
+                </Modal>
 
                 </>
               );
@@ -126,5 +146,8 @@ export default function Backlog ({project, users, refresh}) {
         </TableBody>
       </Table>
     </TableContainer>
+    {editShow && <EditIssue show={editShow} issue={project.issues[currentIssue]} close={() => setEditShow(false)} project={project} users={users} refresh={refresh} />}
+    {viewIssue && <ViewIssue show={viewIssue} issue={project.issues[currentIssue]} close={() => setViewIssue(false)} project={project} users={users} refresh={refresh} />}
+    </>
   )
 }

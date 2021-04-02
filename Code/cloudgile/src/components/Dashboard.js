@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { getCurrentUser } from "../auth";
 import CollapsibleTable from './projectList';
 import NewProject from './CreateNewProject';
-
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,20 +12,19 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
 import NotificationToggle from './NotificationToggle';
 import { MainListItems } from './listItems';
-
+import RefreshIcon from '@material-ui/icons/Refresh';
 import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
-import { getAllProjects } from '../Data/Projects';
+import { getAllProjects } from '../data/Projects';
 import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 import { Tutorial } from './Tutorial';
 import Button from "@material-ui/core/Button";
+import { Fab, Tooltip } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -122,7 +120,6 @@ export default function Dashboard(props) {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([])
   
-
   useEffect(() => {
     loadData();
   }, [])
@@ -139,9 +136,20 @@ export default function Dashboard(props) {
     setOpen(false);
   };
   
+  const refreshProjects = () => {
+    console.log('refresh')
+    loadData()
+  }
+
   return (    
     <div className={classes.root}>
      
+      <Tooltip arrow title="Refresh" placement="left">
+        <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={() => refreshProjects()}>
+          <RefreshIcon />
+        </Fab>
+      </Tooltip>
+
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
       

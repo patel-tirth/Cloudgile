@@ -17,7 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { useParams } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -25,7 +25,7 @@ import { mainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
 import { SearchBar } from './SearchBar';
 import '../App.css';
-import { getProject } from '../Data/Projects/getProject';
+import { getProject } from '../data/Projects/getProject';
 import { getCurrentUser } from '../auth';
 import NotificationToggle from './NotificationToggle';
 import PersonIcon from '@material-ui/icons/Person';
@@ -132,7 +132,7 @@ export default function CloudgileProject() {
   const [open, setOpen] = useState(false);
   const [project, setProject] = useState(null)
   const {projectID} = useParams()
-  const [refresh, setRefresh] = useState(false)
+  // const [refresh, setRefresh] = useState(false)
   const [users, setUsers] = useState(null)
   
   const handleDrawerOpen = () => {
@@ -146,6 +146,7 @@ export default function CloudgileProject() {
   const loadData = async () => {
     let data = await getProject(getCurrentUser().id, projectID)
     setProject(data)
+    setUsers(null)
   }
 
   const loadUsers = async () => {
@@ -159,22 +160,21 @@ export default function CloudgileProject() {
 
   useEffect(() => {
     if (project){
-      loadUsers(project.users)
+      loadUsers()
     }
   }, [project])
 
-  const refreshProjects = useCallback(async () => {
-      await loadData()
-      setRefresh(!refresh)
-    }, [refresh])
+  const refreshProjects = async () => {
+    await loadData()
+  }
 
   return (
     <>
-      {
+      {project === false ? <Redirect to="/dashboard" /> :
         project && users ? 
           <div className={classes.root}>
             <Tooltip arrow title="Refresh" placement="left">
-              <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={refreshProjects}>
+              <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={() => refreshProjects()}>
                 <RefreshIcon />
               </Fab>
             </Tooltip>
@@ -226,26 +226,26 @@ export default function CloudgileProject() {
               <Divider />
             </Drawer>
             <main className={classes.content}>
-              <div className={classes.appBarSpacer} />
               <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} md={8} lg={9}>
-                    <Paper className={fixedHeightPaper}>
-                      <Title align="left"><ViewListIcon style={{margin: '0 10 2 0'}}/>Product Backlog</Title>
-                      <Backlog project={project} users={users} refresh={refreshProjects}/>
-                    </Paper>
+                  <Grid item xs={9}>
+                    <Grid container spacing={3}>
+                      <Grid item xs={12}>
+                        <Paper className={fixedHeightPaper}>
+                          <Title align="left"><ViewListIcon style={{ margin: '0 10 2 0' }} />Product Backlog</Title>
+                          <Backlog project={project} users={users} refresh={refreshProjects} />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Paper className={fixedHeightPaper}>
+                          <Title align="left"><TimelineIcon style={{ margin: '0 10 2 0' }} />Timeline</Title>
+                          <Timeline project={project} users={users} refresh={refreshProjects} />
+                        </Paper>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                      <ProjectDetails/>
-                    </Paper>
-                  </Grid>
-
-                  <Grid item xs={12} md={8} lg={9}>
-                    <Paper className={fixedHeightPaper}>
-                      <Title align="left"><TimelineIcon style={{ margin: '0 10 2 0' }}/>Timeline</Title>
-                      <Timeline project={project} users={users} refresh={refreshProjects}/>
-                    </Paper>
+                  <Grid item xs={3}>
+                    <ProjectDetails project={project} users={users} refresh={refreshProjects}/>
                   </Grid>
                 </Grid>
               </Container>

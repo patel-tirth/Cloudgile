@@ -41,10 +41,10 @@ function App() {
         <ProtectedRoute path="/projects/:projectID/" isLoading={isLoading} isAuthed={!!user} children={<CloudgileProject />}></ProtectedRoute>
         <ProtectedRoute path="/projects/:projectID/manage" isLoading={isLoading} isAuthed={!!user}><Manage/></ProtectedRoute>
         <ProtectedRoute path="/tutorial" isLoading={isLoading} isAuthed={!!user}><Tutorial/></ProtectedRoute>
-        {/* <ProtectedRoute path="/Chat/:projectID" isLoading={isLoading} isAuthed={!!user} children={<ChatRoom />}></ProtectedRoute> */}
+        <ProtectedRoute path="/chat/:projectID" isLoading={isLoading} isAuthed={!!user} children={<NewChatRoom />}></ProtectedRoute>
         {/* <ProtectedRoute path="/projects/projectID/members" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
         {/* <ProtectedRoute path="/projects" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute> */}
-        <ProtectedRoute path="/Chat" isLoading={isLoading} isAuthed={!!user} children={<NewChatRoom />}></ProtectedRoute>
+        {/* <ProtectedRoute path="/Chat" isLoading={isLoading} isAuthed={!!user} children={<NewChatRoom />}></ProtectedRoute> */}
         <ProtectedRoute path="/settings" isLoading={isLoading} isAuthed={!!user}><Settings/></ProtectedRoute>
         <ProtectedRoute path="/signOut" isLoading={isLoading} isAuthed={!!user}></ProtectedRoute>
         

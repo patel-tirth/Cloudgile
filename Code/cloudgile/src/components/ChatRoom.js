@@ -6,7 +6,9 @@ import 'firebase/auth';
 import 'firebase/analytics';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import SendIcon from '@material-ui/icons/Send';
-import { makeStyles } from '@material-ui/core';
+import { Box, Container, IconButton } from '@material-ui/core';
+import { Button, Form } from 'react-bootstrap';
+import { useParams } from 'react-router';
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
@@ -14,6 +16,7 @@ const firestore = firebase.firestore();
 
 export function ChatRoom(props) {
   const dummy = useRef();
+  const projectID = useParams();
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(25);
   const [messages] = useCollectionData(query, { idField: 'id' });
@@ -34,15 +37,20 @@ export function ChatRoom(props) {
 
   return (
   <>
-    <main>
-          {messages && messages.map(msg => {
-            return (<ChatMessage key={msg.id} message={msg} />)
-          })}
-            <form className="form-style" onSubmit={sendMessage}>
-            <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Type a Message" />
-            <button type="submit" disabled={!formValue}><SendIcon /></button>
-          </form>
-    </main>
+    <Container fluid maxWidth={false}>
+      {messages && messages.map(msg => {
+        return (<ChatMessage key={msg.id} message={msg} />)
+      })}
+      <span ref={dummy}></span>
+      <Box component="div" style={{width: '', bottom: 0, position: 'absolute'}}>
+        <Form style={{display: 'flex',}} onSubmit={sendMessage}>
+          <Form.Group style={{ display: 'contents' }}>
+            <Form.Control required onInput={e => setFormValue(e.target.value)} placeholder="Type a Message" />
+              <Button variant="primary" type="submit" disabled={!formValue}><SendIcon /></Button>
+          </Form.Group>
+        </Form>
+      </Box>
+    </Container>
   </>
   )
 }

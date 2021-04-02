@@ -9,9 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button, IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { closeIssue } from '../Data/Scrum/closeIssue';
-import { repoenIssue } from '../Data/Scrum/repoenIssue'
+import { repoenIssue } from '../data/Scrum/repoenIssue'
 import { Modal } from 'react-bootstrap';
+import { getCurrentUser } from '../auth';
+import { ViewIssue } from './ViewIssue';
 
 const useRowStyles = makeStyles({
     root: {
@@ -43,17 +44,23 @@ export default function Timeline({ project, users, refresh }) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [viewIssue, setViewIssue] = useState(false)
+    const [currentIssue, setCurrentIssue] = useState(null)
+
+    const current = getCurrentUser().id;
 
     const reOpenThisIssue = (issue, key) => {
         repoenIssue(project.id, issue, key)
         refresh()
         handleClose()
     }
-    const handleCellClick = (id) => {
-        console.log(id)
+    const handleCellClick = (issue) => {
+        setCurrentIssue(issue)
+        setViewIssue(true)
     }
 
     return (
+        <>
         <TableContainer component={Paper}>
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -83,11 +90,11 @@ export default function Timeline({ project, users, refresh }) {
                                     {project.issues[issue].closedOn}
                                 </TableCell>
                                 <TableCell align="right">
-                                    <IconButton aria-label="expand row" size="small" onClick={() => handleShow()}>
+                                    { project.leadId === current && <IconButton aria-label="expand row" size="small" onClick={() => handleShow()}>
                                         <Tooltip title="Re-open Issue">
                                             <CheckCircleIcon style={{ color: 'red' }}/>
                                         </Tooltip>
-                                    </IconButton>
+                                    </IconButton>}
                                 </TableCell>
                             </TableRow>
 
@@ -119,5 +126,7 @@ export default function Timeline({ project, users, refresh }) {
                 </TableBody>
             </Table>
         </TableContainer>
+        {viewIssue && <ViewIssue show={viewIssue} issue={project.issues[currentIssue]} close={() => setViewIssue(false)} project={project} users={users} refresh={refresh} />}
+        </>
     )
 }

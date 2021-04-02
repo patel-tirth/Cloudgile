@@ -29,11 +29,11 @@ export const MainListItems = (props) => {
         </ListItem>
       </Link>
       <SettingsDialog />
-      <ListItem button>
+      <ListItem button onClick={() => signOut()} >
         <ListItemIcon>
           <ExitToAppIcon />
         </ListItemIcon>
-        <ListItemText primary="Log Out" onClick={() => signOut()} />
+        <ListItemText primary="Log Out"/>
       </ListItem>
     </div>
   )

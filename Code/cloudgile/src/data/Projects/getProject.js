@@ -7,8 +7,6 @@ export const getProject = async (user_id, project_id) => {
     await firebase.database().ref('/projects/' + project_id + '/users/').once('value', snapshot => {
         if (snapshot.val().includes(user_id)) {
             access = true;
-        }else {
-            throw new Error('You are not allowed')
         }
     }).then(async () => {
         if (access) {
@@ -18,5 +16,8 @@ export const getProject = async (user_id, project_id) => {
         }
     })
     // console.log(data)
+    if (!access) {
+        return false
+    }
     return data;
 }
