@@ -1,8 +1,10 @@
-import firebase from 'firebase/app'
-import 'firebase/database'
+import React from 'react'
 
-export const CreateProject = async (project, project_id) => {
-    await firebase.database().ref('projects/' + project_id).set(project, (error) => {
-        if (error) throw new Error(error)
-    });
+export const CreateProject = () => {
+        try {
+            console.log('Creating New Project')
+        }
+        catch(e) {
+            return null
+        }
 }

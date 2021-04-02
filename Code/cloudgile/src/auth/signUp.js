@@ -7,6 +7,7 @@ export const signUp = async (email, password, displayName) => {
                 displayName: displayName
 
             }).then(() => {
+
             }, error => {
                 throw new Error('Error Creating New Account');
             })
