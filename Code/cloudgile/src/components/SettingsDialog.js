@@ -18,9 +18,9 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ColorLensIcon from '@material-ui/icons/ColorLens';
+import StandardDialog from './StandardDialog'
 import {
   Close as CloseIcon,
   AccountCircle as AccountCircleIcon,
@@ -44,35 +44,6 @@ import {
 //   const classes = useStyles();
 //   const {children, value, index} = props;
 
-//   return <Box>
-//     {
-//       value === index && index === 2 && (
-//       <List>
-//       <ListItem button
-//       >
-//         <ListItemText primary="Gmail" />
-//       </ListItem>
-//       <Divider />
-//       <ListItem button>
-//         <ListItemText primary="Github" />
-//       </ListItem>
-//       <ListItem button>
-//         <ListItemText primary="Facebook" />
-//       </ListItem>
-//       </List>
-//       )
-//     }
-//     {
-//       value === index && index === 0 && (
-//         <div className={classes.root}>
-//             <Avatar alt="Cindy Baker" src="https://techcrunch.com/wp-content/uploads/2018/07/logo-2.png?w=300" className={classes.large} />
-//         </div>
-        
-//       )
-//     }
-//   </Box>
-// }
-
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
@@ -88,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     '& > *': {
-      margin: theme.spacing(2),
+      margin: theme.spacing(1),
+      width: '33%'
     },
   },
   large: {
@@ -112,6 +84,7 @@ export default function FullScreenDialog() {
   const handleClose = () => {
     setOpen(false);
   };
+  
 
   const [value, setValue] = React.useState(0);
 
@@ -161,12 +134,13 @@ export default function FullScreenDialog() {
         <Tab label="Account" icon={<AccountCircleIcon/>}>
         
         </Tab>
-        <Tab label="Appearance" icon={<PaletteIcon/>}/>
+        {/* <Tab label="Appearance" icon={<PaletteIcon/>}/> */}
         <Tab label="Links" icon={<LinkIcon/>}/>
         <Tab label="Security" icon={<SecurityIcon/>}/>
       </Tabs>
           <Box>
-          {value === 2 && (
+          {
+            value === 1 && (
               <List className={classes.root}>
                     <ListItem button>
                       <ListItemAvatar>
@@ -210,85 +184,28 @@ export default function FullScreenDialog() {
           {value === 0 && (
               <Box>
                   <List className={classes.root}>
-                    <ListItem button>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <AccountCircleIcon/>
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary="Avatar"/>
-                      <IconButton aria-label="edit">
-                        <EditIcon />
-                      </IconButton>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <PersonOutlineIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary="First Name" secondary="first name" />
-                      <IconButton aria-label="edit">
-                        <EditIcon />
-                      </IconButton>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <PersonOutlineIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary="Last Name" secondary="last name" />
-                      <IconButton aria-label="edit">
-                        <EditIcon />
-                      </IconButton>
-                    </ListItem>
+                    <StandardDialog value = {"Avatar"} whatValue = {0} whatIcon = {1}/>
+                    <StandardDialog value = {"First Name"} whatValue = {0} whatIcon = {2}/>
+                    <StandardDialog value = {"Last Name"} whatValue = {0} whatIcon = {3}/>
                   </List>
                   <List className={classes.root}>
-                    <ListItem button>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <EmailIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary="Email" secondary="email" />
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <LastPageIcon/>
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary="Signed in " secondary="Last signed in: date, time" />
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <DeleteForeverIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary="Delete Account" secondary="This action cannot be undone" />
-                      <IconButton aria-label="delete">
-                        <DeleteIcon />
-                      </IconButton>
-                  </ListItem>
+                    <StandardDialog value = {"Email"} whatValue = {0} whatIcon = {4}/>
+                    <StandardDialog value = {"Signed in"} whatValue = {0} whatIcon = {5}/>
+                    <StandardDialog value = {"Delete Account"} whatValue = {0} whatIcon = {6}/>
                   </List>
               </Box>
-            )}
-          {value === 3 &&(
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar>
-                    <LockIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Change Password" secondary="Last changed: date" />
-                <IconButton aria-label="password-update">
-                  <EditIcon />
-                </IconButton>
-            </ListItem>
-            )}
-          {value === 1 && (
+            )
+          }
+          {
+            value === 2 &&(
+              <List className = {classes.root}>
+                <StandardDialog value = {"Change Password"} whatValue = {2} whatIcon = {1}/>
+              </List>
+              
+            )
+          }
+          {/* {
+            value === 1 && (
               <ListItem button>
                 <ListItemAvatar>
                   <Avatar>
@@ -300,7 +217,8 @@ export default function FullScreenDialog() {
                   <EditIcon />
                 </IconButton>
             </ListItem>
-            )}
+            )
+          } */}
           <Menu
             id="link-menu"
             anchorEl={anchorEl}
@@ -308,8 +226,8 @@ export default function FullScreenDialog() {
             open={Boolean(anchorEl)}
             onClose={handleCloseMenu}
             >
-              <MenuItem marginLeft="20" onClick={handleCloseMenu}>Link Acccount</MenuItem>
-              <MenuItem marginLeft="20" onClick={handleCloseMenu}>Unlink Account</MenuItem>
+              <MenuItem onClick={handleCloseMenu}>Link Acccount</MenuItem>
+              <MenuItem onClick={handleCloseMenu}>Unlink Account</MenuItem>
             </Menu>
         </Box>
     </Paper>
