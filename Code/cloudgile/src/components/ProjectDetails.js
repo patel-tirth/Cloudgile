@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Divider } from '@material-ui/core';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { addUserToProject } from '../data/Projects/addUserToProject';
+import { addUserToProject } from '../data/Projects';
 import { EditProject } from './EditProject';
 import {getCurrentUser} from '../auth'
 import { getUsersArray } from '../auth/getUsersArray';
