@@ -1,12 +1,20 @@
 import firebase from 'firebase/app'
-import 'firebase/database'
+import 'firebase/firestore'
 
 export const ProductBacklog = async (project_id) => {
-    let data;
-    await firebase.database().ref('projects/' + project_id + '/backlog/').once('value', snapshot => {
-        data = snapshot.val();
-    }, (error) => {
-        throw new Error(error)
+    let data = [];
+    // await firebase.database().ref('projects/' + project_id + '/backlog/').once('value', snapshot => {
+    //     data = snapshot.val();
+    // }, (error) => {
+    //     throw new Error(error)
+    // })
+    await firebase.firestore().collection('projects').doc(project_id).get().then((doc) => {
+        if (doc.exists) {
+            data = doc.data();
+        }
+        else {
+            console.log("No such data");
+        }
     })
     return data;
 }

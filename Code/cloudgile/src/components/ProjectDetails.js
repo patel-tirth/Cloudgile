@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Divider } from '@material-ui/core';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { addUserToProject } from '../data/Projects';
+import { addUserToProject, addProjectToUser } from '../data/Projects';
 import { EditProject } from './EditProject';
 import {getCurrentUser} from '../auth'
 import { getUsersArray } from '../auth/getUsersArray';
@@ -66,6 +66,7 @@ export default function ProjectDetails(props) {
       console.log(userId)
       if (selectedOption === 1) {
         addUserToProject(project.id, userId)
+        addProjectToUser(project.id ,userId)
       } else if (selectedOption === 2) {
         removeUserFromProject(project.id, userId)
       }
@@ -87,7 +88,7 @@ export default function ProjectDetails(props) {
           <b>Project Description</b>
         </Typography>
         <Typography color="textSecondary" gutterBottom component="h2">
-          {project.description}
+          &nbsp; &nbsp;  {project.description}
         </Typography>
         <Divider/>
         <Typography color="textSecondary" component="h2">
@@ -96,9 +97,9 @@ export default function ProjectDetails(props) {
         <Typography color="textSecondary" component="h2">
           {
             Object.keys(users).map((key, i) => {
-              return <>
-                {users[key].name} {project.leadId === key && "(Lead)"} <br></br>
-              </>
+              return <span key={key}>
+                &nbsp; &nbsp; {users[key].name} {project.leadId === key && "(Lead)"} <br></br>
+              </span>
             })
           }
         </Typography>

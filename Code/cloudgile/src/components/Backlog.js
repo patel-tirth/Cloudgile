@@ -59,9 +59,9 @@ export default function Backlog ({project, users, refresh}) {
   }
 
   const closeThisIssue = (issue, key) => {
-    closeIssue(project.id, issue, key)
+    if (closeIssue(project.id, issue, key)){
     refresh()
-    handleClose()
+    handleClose()}
   }
   const handleCellClick = (e, issue) => {
     setCurrentIssue(issue)
@@ -70,7 +70,7 @@ export default function Backlog ({project, users, refresh}) {
 
   return (
     <>
-    <TableContainer component={Paper}>
+    {<TableContainer component={Paper}>
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
@@ -145,7 +145,7 @@ export default function Backlog ({project, users, refresh}) {
             })}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer>}
     {editShow && <EditIssue show={editShow} issue={project.issues[currentIssue]} close={() => setEditShow(false)} project={project} users={users} refresh={refresh} />}
     {viewIssue && <ViewIssue show={viewIssue} issue={project.issues[currentIssue]} close={() => setViewIssue(false)} project={project} users={users} refresh={refresh} />}
     </>

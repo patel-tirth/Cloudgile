@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,7 +39,7 @@ function Row(props) {
     e.preventDefault()
     history.push(`/projects/${row.id}`);
   }
-  
+
   return (
     <Fragment>
       <TableRow className={classes.root} button>
@@ -81,7 +81,7 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.backlog && row.backlog.map((issue) => (
+                  {false && row.backlog && row.backlog.map((issue) => (
                     <TableRow>
                       <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
                       <TableCell>{row.issues[issue].createdOn}</TableCell>
@@ -89,7 +89,7 @@ function Row(props) {
                       <TableCell>{row.issues[issue].completeBy}</TableCell>
                     </TableRow>
                   ))}
-                  {row.timeline && row.timeline.map((issue) => (
+                  {false && row.timeline && row.timeline.map((issue) => (
                     <TableRow>
                       <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
                       <TableCell>{row.issues[issue].createdOn}</TableCell>

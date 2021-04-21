@@ -130,7 +130,7 @@ export default function Dashboard(props) {
     const result = await getAllProjects(current);
     const firstUser = await getUserForProject([current])
     setRows(result)
-    setFirstTime(firstUser[current].firstUser)
+    setFirstTime(false)
   };
 
   const handleDrawerOpen = () => {
@@ -141,7 +141,6 @@ export default function Dashboard(props) {
   };
   
   const refreshProjects = () => {
-    console.log('refresh')
     loadData()
   }
 

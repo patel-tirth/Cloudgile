@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import uuid from 'react-uuid'
 import { getCurrentUser } from '../auth';
 import { CreateProject } from '../data/Scrum';
-import { addUserToProject } from '../data/Projects';
+import { addUserToProject, addProjectToUser } from '../data/Projects';
 import { Fab } from '@material-ui/core';
 import AddIcon  from '@material-ui/icons/Add';
 
@@ -32,8 +32,9 @@ export default function NewProject(props) {
       e.preventDefault()
       const id = uuid()
       const user = getCurrentUser()
-      await CreateProject({ id, name, description, type, leadId: user.id, leadName: user.name, category, numUsers: 0, numIssues: 0, numBacklog:0, numTimeline: 0, createdOn: today.toLocaleDateString(), updatedOn: today.toLocaleDateString()}, id);
+      await CreateProject({ id, name, description, type, leadId: user.id, leadName: user.name, category, numUsers: 0, users: [], numIssues: 0, numBacklog:0, numTimeline: 0, createdOn: today.toLocaleDateString(), updatedOn: today.toLocaleDateString()}, id);
       await addUserToProject(id, user.id)
+      await addProjectToUser(id, user.id)
       handleClose()
       props.loadData()
     }

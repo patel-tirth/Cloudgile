@@ -1,8 +1,7 @@
 import firebase from 'firebase/app'
-import 'firebase/database'
+import 'firebase/firestore'; 
 
 export const CreateProject = async (project, project_id) => {
-    await firebase.database().ref('projects/' + project_id).set(project, (error) => {
-        if (error) throw new Error(error)
-    });
+    console.log(project)
+    await firebase.firestore().collection('projects').doc(project_id).set(project);
 }

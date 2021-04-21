@@ -38,7 +38,7 @@ import { getUserForProject } from '../auth/getUserFromId';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import ProjectDetails from './ProjectDetails';
-
+import firebase from 'firebase/app'
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -132,7 +132,7 @@ export default function CloudgileProject() {
   const [open, setOpen] = useState(false);
   const [project, setProject] = useState(null)
   const {projectID} = useParams()
-  const [users, setUsers] = useState(null)
+  const [users, setUsers] = useState(null)  
   
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -149,6 +149,7 @@ export default function CloudgileProject() {
   }
 
   const loadUsers = async () => {
+    console.log(project.users)
     let data = await getUserForProject(project.users)
     setUsers(data)
   }
