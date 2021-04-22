@@ -19,14 +19,6 @@ export const MainListItems = ({projectID}) => {
           <ListItemText primary="Dashboard" />
         </ListItem>
       </Link>
-      <Link to={"/chat/" + projectID}>
-        <ListItem button>
-          <ListItemIcon>
-            <ChatIcon />
-          </ListItemIcon>
-          <ListItemText primary="Chat" />
-        </ListItem>
-      </Link>
       <ListItem button onClick={() => signOut()}>
         <ListItemIcon>
           <ExitToAppIcon />

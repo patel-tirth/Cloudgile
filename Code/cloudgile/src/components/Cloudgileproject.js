@@ -18,7 +18,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Redirect, useParams } from 'react-router';
-
+import ChatIcon from '@material-ui/icons/Chat';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { MainListItems } from './ProjectDashboardListItems';
@@ -38,7 +38,8 @@ import { getUserForProject } from '../auth/getUserFromId';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import ProjectDetails from './ProjectDetails';
-import firebase from 'firebase/app'
+import { Link } from 'react-router-dom';
+import ChatDrawer from './ChatDrawer'
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -132,7 +133,7 @@ export default function CloudgileProject() {
   const [open, setOpen] = useState(false);
   const [project, setProject] = useState(null)
   const {projectID} = useParams()
-  const [users, setUsers] = useState(null)  
+  const [users, setUsers] = useState(null)
   
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -149,7 +150,6 @@ export default function CloudgileProject() {
   }
 
   const loadUsers = async () => {
-    console.log(project.users)
     let data = await getUserForProject(project.users)
     setUsers(data)
   }
@@ -173,6 +173,7 @@ export default function CloudgileProject() {
       {project === false ? <Redirect to="/dashboard" /> :
         project && users ? 
           <div className={classes.root}>
+            <ChatDrawer/>
             <Tooltip arrow title="Refresh" placement="left">
               <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={() => refreshProjects()}>
                 <RefreshIcon />
@@ -223,7 +224,7 @@ export default function CloudgileProject() {
               </div>
               <Divider />
               <List>
-                <MainListItems projectID={projectID}/>
+                <MainListItems/>
               </List>
               <Divider />
             </Drawer>
