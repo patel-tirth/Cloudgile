@@ -25,7 +25,7 @@ import { MainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
 import { SearchBar } from './SearchBar';
 import '../App.css';
-import { getProject } from '../data/Projects/getProject';
+import { getProject } from '../Data/Projects/getProject';
 import { getCurrentUser } from '../auth';
 import NotificationToggle from './NotificationToggle';
 import PersonIcon from '@material-ui/icons/Person';
@@ -40,6 +40,7 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import ProjectDetails from './ProjectDetails';
 import { Link } from 'react-router-dom';
 import ChatDrawer from './ChatDrawer'
+import UserIconToggle from './UserIconToggle';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -201,7 +202,8 @@ export default function CloudgileProject() {
                 </div>
                 <NotificationToggle/>
                 <IconButton>
-                  <PersonIcon style={{ color: grey[50] }} />
+                  {/* <PersonIcon style={{ color: grey[50] }} /> */}
+                  <UserIconToggle/>
                 </IconButton>
               </Toolbar>
             </AppBar>

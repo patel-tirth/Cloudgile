@@ -18,8 +18,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 import { ChatRoom } from './ChatRoom';
 import { Redirect, useParams } from 'react-router';
-import { getProject } from '../data/Projects';
+import { getProject } from '../Data/Projects';
 import { getCurrentUser } from '../auth';
+import UserIconToggle from './UserIconToggle';
 
 const drawerWidth = 240;
 
@@ -161,7 +162,8 @@ export default function NewChatRoom() {
                     </div>
                     <NotificationToggle />
                     <IconButton>
-                        <PersonIcon style={{ color: grey[50] }} />
+                        {/* <PersonIcon style={{ color: grey[50] }} /> */}
+                        <UserIconToggle/>
                     </IconButton>
                 </Toolbar>
             </AppBar>

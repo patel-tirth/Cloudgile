@@ -19,13 +19,13 @@ import { MainListItems } from './listItems';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
-import { getAllProjects } from '../data/Projects';
+import { getAllProjects } from '../Data/Projects';
 import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 import { Tutorial } from './Tutorial';
 import { Fab, Tooltip } from '@material-ui/core';
 import { getUserForProject } from '../auth/getUserFromId';
-
+import UserIconToggle from './UserIconToggle';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -175,7 +175,7 @@ export default function Dashboard(props) {
           </div>
           <NotificationToggle/>
           <IconButton>
-            <PersonIcon style={{ color: grey[50] }}/>
+            <UserIconToggle/>
           </IconButton>
         </Toolbar>
       </AppBar>

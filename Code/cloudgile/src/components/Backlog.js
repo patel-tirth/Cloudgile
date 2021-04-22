@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { Button, IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'; 
 import EditIcon from '@material-ui/icons/Edit';
-import {closeIssue} from '../data/Scrum/closeIssue'
+import {closeIssue} from '../Data/Scrum/closeIssue'
 import { Modal } from 'react-bootstrap';
 import { EditIssue } from './EditIssue';
 import { getCurrentUser } from '../auth';
