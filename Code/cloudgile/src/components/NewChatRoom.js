@@ -18,7 +18,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 import { ChatRoom } from './ChatRoom';
 import { Redirect, useParams } from 'react-router';
-import { getProject } from '../Data/Projects';
+import { getProject } from '../data/Projects';
 import { getCurrentUser } from '../auth';
 import UserIconToggle from './UserIconToggle';
 

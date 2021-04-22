@@ -19,7 +19,7 @@ import { MainListItems } from './listItems';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
-import { getAllProjects } from '../Data/Projects';
+import { getAllProjects } from '../data/Projects';
 import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 import { Tutorial } from './Tutorial';

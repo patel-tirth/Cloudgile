@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
-import { editIssueDetails } from '../Data/Scrum/editIssueDetails';
+import { editIssueDetails } from '../data/Scrum/editIssueDetails';
 
 export const EditIssue = (props) => {
     const { issue } = props

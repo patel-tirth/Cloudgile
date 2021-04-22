@@ -120,8 +120,8 @@ export default function TemporaryDrawer() {
   return (
     <div>
         <Tooltip disableHoverListener disableFocusListener placement="left">
-        <Fab color="secondary" style={{ position: 'absolute', bottom: 160, right: 20 }}>
-            <ChatIcon onClick={toggleDrawer('right', true)}>{'right'}</ChatIcon>
+        <Fab onClick={toggleDrawer('right', true)} color="secondary" style={{ position: 'absolute', bottom: 160, right: 20 }}>
+            <ChatIcon>{'right'}</ChatIcon>
             <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
             {list('right')}
             </Drawer>

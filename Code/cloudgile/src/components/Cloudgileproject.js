@@ -25,7 +25,7 @@ import { MainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
 import { SearchBar } from './SearchBar';
 import '../App.css';
-import { getProject } from '../Data/Projects/getProject';
+import { getProject } from '../data/Projects/getProject';
 import { getCurrentUser } from '../auth';
 import NotificationToggle from './NotificationToggle';
 import PersonIcon from '@material-ui/icons/Person';

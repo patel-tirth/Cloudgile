@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button, IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { repoenIssue } from '../Data/Scrum/repoenIssue'
+import { repoenIssue } from '../data/Scrum/repoenIssue'
 import { Modal } from 'react-bootstrap';
 import { getCurrentUser } from '../auth';
 import { ViewIssue } from './ViewIssue';
