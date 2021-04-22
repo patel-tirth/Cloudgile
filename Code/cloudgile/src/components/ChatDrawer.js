@@ -98,7 +98,7 @@ export default function TemporaryDrawer() {
             })}
             role="presentation"
             >
-            <Container fluid maxWidth={false}>
+            <Container fluid="true" maxWidth={false}>
             {messages && messages.map(msg => {
                 return (<ChatMessage key={msg.id} message={msg} />)
             })}
@@ -119,14 +119,14 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-        <Tooltip disableHoverListener disableFocusListener placement="left">
+        <Tooltip arrow title="Create Issue" placement="left">
         <Fab onClick={toggleDrawer('right', true)} color="secondary" style={{ position: 'absolute', bottom: 160, right: 20 }}>
             <ChatIcon>{'right'}</ChatIcon>
-            <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
-            {list('right')}
-            </Drawer>
         </Fab>
         </Tooltip>
+          <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
+            {list('right')}
+          </Drawer>
     </div>
   );
 }

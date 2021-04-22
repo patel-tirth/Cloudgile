@@ -18,18 +18,14 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Redirect, useParams } from 'react-router';
-import ChatIcon from '@material-ui/icons/Chat';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { MainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
-import { SearchBar } from './SearchBar';
 import '../App.css';
 import { getProject } from '../data/Projects/getProject';
 import { getCurrentUser } from '../auth';
 import NotificationToggle from './NotificationToggle';
-import PersonIcon from '@material-ui/icons/Person';
-import { grey } from '@material-ui/core/colors';
 import NewIssue from './CreateNewIssue';
 import { Tooltip } from '@material-ui/core';
 import { Fab } from '@material-ui/core';
@@ -39,12 +35,10 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import ProjectDetails from './ProjectDetails';
 import { BoxLoading } from 'react-loadingg';
-
-import firebase from 'firebase/app'
-
-import { Link } from 'react-router-dom';
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import ChatDrawer from './ChatDrawer'
 import UserIconToggle from './UserIconToggle';
+import { Sprint } from './Sprint';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -206,7 +200,6 @@ export default function CloudgileProject() {
                   {project.name}
                 </Typography>
                 <div>
-                  <SearchBar />
                 </div>
                 <NotificationToggle/>
                 <IconButton>
@@ -258,7 +251,13 @@ export default function CloudgileProject() {
                     </Grid>
                   </Grid>
                   <Grid item xs={3}>
-                    <ProjectDetails project={project} users={users} refresh={refreshProjects}/>
+                    <Paper>
+                      <ProjectDetails project={project} users={users} refresh={refreshProjects} />
+                    </Paper>
+                    <Paper className={fixedHeightPaper} style={{marginTop: '20px'}}>
+                      <Title align="left"><DirectionsRunIcon style={{ margin: '0 5 2 2' }} />Sprint</Title>
+                      <Sprint project={project} refresh={refreshProjects} />
+                    </Paper>
                   </Grid>
                 </Grid>
               </Container>

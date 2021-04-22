@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { Backdrop, CircularProgress } from '@material-ui/core'
 import { BoxLoading } from 'react-loadingg';
 
 export const ProtectedRoute = ({ isAuthed, isLoading, ...props }) => {

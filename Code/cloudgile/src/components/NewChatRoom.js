@@ -13,9 +13,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationToggle from './NotificationToggle';
 import { MainListItems } from './listItems';
-import { SearchBar } from './SearchBar';
-import PersonIcon from '@material-ui/icons/Person';
-import { grey } from '@material-ui/core/colors';
 import { ChatRoom } from './ChatRoom';
 import { Redirect, useParams } from 'react-router';
 import { getProject } from '../data/Projects';
@@ -156,7 +153,6 @@ export default function NewChatRoom() {
                         DASHBOARD
                     </Typography>
                     <div>
-                        <SearchBar />
                     </div>
                     <NotificationToggle />
                     <IconButton>

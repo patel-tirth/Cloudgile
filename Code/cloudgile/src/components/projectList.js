@@ -42,7 +42,7 @@ function Row(props) {
 
   return (
     <Fragment>
-      <TableRow className={classes.root} button>
+      <TableRow className={classes.root} >
         <TableCell component="th" scope="row" onClick={handleCellClick}>{row.name}</TableCell>
         <TableCell align="right" onClick={handleCellClick}>{row.type}</TableCell>
         <TableCell align="right" onClick={handleCellClick}>{row.leadName}</TableCell>
@@ -81,16 +81,16 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.backlog && row.backlog.map((issue) => (
-                    <TableRow>
+                  {row.backlog && row.backlog.map((issue, key) => (
+                    <TableRow key={key}>
                       <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
                       <TableCell>{row.issues[issue].createdOn}</TableCell>
                       <TableCell>{row.issues[issue].updatedOn}</TableCell>
                       <TableCell>{row.issues[issue].completeBy}</TableCell>
                     </TableRow>
                   ))}
-                  {row.timeline && row.timeline.map((issue) => (
-                    <TableRow>
+                  {row.timeline && row.timeline.map((issue, key) => (
+                    <TableRow key={key}>
                       <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
                       <TableCell>{row.issues[issue].createdOn}</TableCell>
                       <TableCell>{row.issues[issue].updatedOn}</TableCell>
@@ -110,16 +110,8 @@ function Row(props) {
 Row.propTypes = {
   row: PropTypes.shape({
     type: PropTypes.string.isRequired,
-    lead: PropTypes.string.isRequired,
+    lead: PropTypes.string,
     category: PropTypes.string.isRequired,
-    issues: PropTypes.arrayOf(
-      PropTypes.shape({
-        issueName: PropTypes.string.isRequired,
-        createdOn: PropTypes.string.isRequired,
-        updatedOn: PropTypes.string.isRequired,
-        updatedBy: PropTypes.string.isRequired
-      }),
-    ),
     name: PropTypes.string.isRequired,
     URL: PropTypes.string,
   }).isRequired,

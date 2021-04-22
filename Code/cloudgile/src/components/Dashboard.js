@@ -17,11 +17,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationToggle from './NotificationToggle';
 import { MainListItems } from './listItems';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
 import { getAllProjects } from '../data/Projects';
-import PersonIcon from '@material-ui/icons/Person';
-import { grey } from '@material-ui/core/colors';
 import { Tutorial } from './Tutorial';
 import { Fab, Tooltip } from '@material-ui/core';
 import { getUserForProject } from '../auth/getUserFromId';
@@ -180,7 +177,6 @@ export default function Dashboard(props) {
             DASHBOARD
           </Typography>
           <div>
-            <SearchBar />
           </div>
           <NotificationToggle messages={messages}/>
           <IconButton>

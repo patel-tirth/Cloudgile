@@ -15,7 +15,9 @@ import { EditIssue } from './EditIssue';
 import { getCurrentUser } from '../auth';
 import { ViewIssue } from './ViewIssue';
 import { closeIssue } from '../data/Scrum/closeIssue';
- 
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { AddToSprint } from '../data/Scrum/AddToSprint';
+import { SendReminders } from '../data/Reminders/SendReminders';
 
 const useRowStyles = makeStyles({
   root: {
@@ -72,7 +74,7 @@ export default function Backlog ({project, users, refresh}) {
 
   return (
     <>
-    {<TableContainer component={Paper}>
+    {<TableContainer id="backlogTable" style={{maxHeight: '250px'}} component={Paper}>
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
@@ -86,13 +88,12 @@ export default function Backlog ({project, users, refresh}) {
         <TableBody>
             {project.backlog && project.backlog.map((issue, key) => {
               return (
-                <>
                 <TableRow key={key} className={classes.root}>
                   <TableCell onClick={(e) => handleCellClick(e, issue)} style={{}} component="th" scope="row">
                     {project.issues[issue].title}
                   </TableCell>
-                  <TableCell onClick={(e) => handleCellClick(e, issue)} style={{ backgroundColor: getColor(project.issues[issue].priority), padding: 1, textTransform: 'uppercase' }} align="center">
-                    {project.issues[issue].priority}
+                  <TableCell onClick={(e) => handleCellClick(e, issue)} style={{ backgroundColor: getColor(project.issues[issue].priority), color: 'darkblue', padding: 1, textTransform: 'uppercase' }} align="center">
+                    <b>{project.issues[issue].priority}</b>
                   </TableCell>
                   <TableCell onClick={(e) => handleCellClick(e, issue)} align="right" style={{}}>
                       {users[project.issues[issue].assignedTo] ? users[project.issues[issue].assignedTo].name : <i>User Removed</i>}
@@ -104,7 +105,17 @@ export default function Backlog ({project, users, refresh}) {
                   <TableCell align="right">
                       {(current === (project.issues[issue].assignedTo) || (current === project.leadId)) &&
                       <>
-                      <IconButton aria-label="expand row" size="small" onClick={(e) => handleEdit(e, issue)}>
+                      <IconButton aria-label="expand row" size="small" onClick={() => {
+                        AddToSprint(project.id, issue);
+                        SendReminders(`An issue has been added to the sprint in the project "${project.name}"`, project.users)
+                        refresh();
+                        }}>
+                        <Tooltip title="Add To Sprint">
+                          <AddCircleIcon style={{ color: 'darkorange' }} />
+                        </Tooltip>
+                      </IconButton>
+
+                      <IconButton aria-label="expand row" size="small" style={{ marginLeft: 10 }} onClick={(e) => handleEdit(e, issue)}>
                       <Tooltip title="Edit Issue">
                         <EditIcon color="primary"/>
                       </Tooltip>
@@ -118,31 +129,28 @@ export default function Backlog ({project, users, refresh}) {
                       </>
                     }
                   </TableCell>
+                    <Modal
+                      // key={'modal'.concat(key.toString())}
+                      show={show}
+                      onHide={handleClose}
+                      backdrop="static"
+                      keyboard={false}
+                      centered
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Close Issue</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        Are you sure?
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="contained" onClick={handleClose}>
+                          No
+                        </Button>
+                        <Button variant="contained" onClick={() => closeThisIssue(issue, key)}>Yes</Button>
+                      </Modal.Footer>
+                    </Modal>
                 </TableRow>
-
-                <Modal
-                  key={'modal'.concat(key.toString())}
-                  show={show}
-                  onHide={handleClose}
-                  backdrop="static"
-                  keyboard={false}
-                  centered
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title>Close Issue</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    Are you sure?
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="contained" onClick={handleClose}>
-                      No
-                    </Button>
-                    <Button variant="contained" onClick={() => closeThisIssue(issue, key)}>Yes</Button>
-                  </Modal.Footer>
-                </Modal>
-
-                </>
               );
             })}
         </TableBody>

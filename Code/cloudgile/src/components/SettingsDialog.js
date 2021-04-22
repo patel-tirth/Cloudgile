@@ -14,17 +14,12 @@ import Box from '@material-ui/core/Box';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import EmailIcon from '@material-ui/icons/Email';
-import LockIcon from '@material-ui/icons/Lock';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import EditIcon from '@material-ui/icons/Edit';
-import ColorLensIcon from '@material-ui/icons/ColorLens';
 import StandardDialog from './StandardDialog'
 import {
   Close as CloseIcon,
   AccountCircle as AccountCircleIcon,
-  Palette as PaletteIcon,
   Link as LinkIcon,
   Security as SecurityIcon,
 } from "@material-ui/icons";
@@ -38,7 +33,6 @@ import {
   Menu,
   MenuItem,
 } from "@material-ui/core";
-
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -81,7 +75,6 @@ export default function FullScreenDialog() {
     setOpen(false);
   };
   
-
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -94,7 +87,6 @@ export default function FullScreenDialog() {
   const handleCloseMenu = () => {
     setAnchorEl(null)
   }
-
 
   return (
     <div>
@@ -130,7 +122,6 @@ export default function FullScreenDialog() {
         <Tab label="Account" icon={<AccountCircleIcon/>}>
         
         </Tab>
-        {/* <Tab label="Appearance" icon={<PaletteIcon/>}/> */}
         <Tab label="Links" icon={<LinkIcon/>}/>
         <Tab label="Security" icon={<SecurityIcon/>}/>
       </Tabs>
@@ -200,21 +191,7 @@ export default function FullScreenDialog() {
               
             )
           }
-          {/* {
-            value === 1 && (
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar>
-                    <ColorLensIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Change Theme" secondary/>
-                <IconButton aria-label="cange-theme">
-                  <EditIcon />
-                </IconButton>
-            </ListItem>
-            )
-          } */}
+          
           <Menu
             id="link-menu"
             anchorEl={anchorEl}

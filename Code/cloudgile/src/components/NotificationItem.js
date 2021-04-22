@@ -7,10 +7,16 @@ import {
   Avatar,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-
+import ClearIcon from '@material-ui/icons/Clear';
+import IconButton from '@material-ui/core/IconButton';
+import {removeReminders} from '../data/Reminders/removeReminders'
 function NotificationItem(props) {
   const { message, divider } = props;
   const [hasErrorOccurred, setHasErrorOccurred] = useState(false);
+
+  const remove = () => {
+    removeReminders(message);
+  }
 
   const handleError = useCallback(() => {
     setHasErrorOccurred(true);
@@ -31,12 +37,15 @@ function NotificationItem(props) {
       <ListItemText
         primary={message}
       />
+    <IconButton onClick={remove}>
+      <ClearIcon/>
+    </IconButton>
     </ListItem>
   );
 }
 
 NotificationItem.propTypes = {
-  message: PropTypes.object.isRequired,
+  message: PropTypes.string.isRequired,
   divider: PropTypes.bool,
 };
 

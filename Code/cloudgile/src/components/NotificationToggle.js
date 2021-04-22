@@ -13,13 +13,12 @@ import {
   Badge,
 } from "@material-ui/core";
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { getReminders } from "../data/Reminders/getReminders";
 import { getCurrentUser } from "../auth";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import NotificationItem from "./NotificationItem";
 import firebase from 'firebase/app'
-import { useCollection, useCollectionData, useDocument, useDocumentData } from "react-firebase-hooks/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 const styles = (theme) => ({
   tabContainer: {
