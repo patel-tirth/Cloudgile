@@ -1,14 +1,12 @@
-import React from 'react'
 import firebase from 'firebase/app'
 
 export const getReminders = async (user_id) => {
-    try {
-        let data;
-        await firebase.database().ref('/users/' + user_id + '/reminders/').once('value', snapshot => {
-            data = snapshot.val();
-        })
-        return data;
-    } catch (e) {
-        throw new Error(e.message)
-    }
+    let reminders;
+    await firebase.firestore().collection('users').doc(user_id).get().then(async (doc) => {
+        if (doc.exists) {
+            const data = doc.data();
+            reminders = data.reminders;
+        }
+    })
+    return reminders;
 }

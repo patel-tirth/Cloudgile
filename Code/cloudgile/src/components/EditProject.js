@@ -86,9 +86,9 @@ export const EditProject = (props) => {
                         <Form.Label required>Project Lead</Form.Label>
                         <Form.Control required as="select" value={lead} onInput={e => {setChanged(true); setLead(e.target.value)}} >
                             {
-                                // Object.keys(props.users).map((key, i) => {
-                                //     return (<option value={key} key={i}>{props.users[key].name + " (" + props.users[key].email + ")"}</option>)
-                                // })
+                                Object.keys(props.users).map((key, i) => {
+                                    return (<option value={key} key={i}>{props.users[key].name + " (" + props.users[key].email + ")"}</option>)
+                                })
                             }
                         </Form.Control>
                     </Form.Group>

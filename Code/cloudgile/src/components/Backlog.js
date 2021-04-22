@@ -59,9 +59,10 @@ export default function Backlog ({project, users, refresh}) {
   }
 
   const closeThisIssue = (issue, key) => {
-    if (closeIssue(project.id, issue, key)){
-    refresh()
-    handleClose()}
+    closeIssue(project.id, issue, key).then(() => {
+        refresh()
+        handleClose()
+    })
   }
   const handleCellClick = (e, issue) => {
     setCurrentIssue(issue)
@@ -93,7 +94,7 @@ export default function Backlog ({project, users, refresh}) {
                     {project.issues[issue].priority}
                   </TableCell>
                   <TableCell onClick={(e) => handleCellClick(e, issue)} align="right" style={{}}>
-                    {users[project.issues[issue].assignedTo].name}
+                      {users[project.issues[issue].assignedTo] ? users[project.issues[issue].assignedTo].name : <i>User Removed</i>}
                   </TableCell>
                   <TableCell onClick={(e) => handleCellClick(e, issue)} align="right" style={{}}>
                     {project.issues[issue].completeBy}

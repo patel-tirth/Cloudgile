@@ -9,6 +9,6 @@ export const getUsersArray = async () => {
     }, error => {
         throw new Error(error.message)
     })
-    console.log(users);
+    // console.log(users);
     return users;
 }

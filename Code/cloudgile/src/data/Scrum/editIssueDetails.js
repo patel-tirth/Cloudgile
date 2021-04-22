@@ -9,6 +9,4 @@ export const editIssueDetails = async (project_id, issue) => {
     }, error => {
         throw new Error(error.message)
     })
-
-    // await firebase.firestore().collection('projects').doc(project_id).collection('issues').doc(issue.id).update({...issue})
 }

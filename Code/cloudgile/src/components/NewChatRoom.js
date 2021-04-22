@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     },
     toolbarTitle: {
         marginRight: 'auto',
-        // marginLeft: 'auto',
         textTransform: 'uppercase',
         ...theme.mixins.toolbarHeading
     },
@@ -91,7 +90,6 @@ const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
-        // height: '100vh',
         overflow: 'auto',
     },
     container: {
@@ -143,7 +141,7 @@ export default function NewChatRoom() {
             { project === false ? <Redirect to="/dashboard"/> :
             <div className={classes.root}>
             <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
                         edge="start"

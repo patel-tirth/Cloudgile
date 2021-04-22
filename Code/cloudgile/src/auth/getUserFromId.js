@@ -9,18 +9,7 @@ export const getUserForProject = async (user_list) => {
     }, error => {
         throw new Error(error.message)
     })
-    // await firebase.firestore().collection('users').get().then(snapshot => {
-        
-    // });
-    // await user_list.forEach(async id => {
-    //     await usersRef.doc(id).get().then(doc => {
-    //         if (doc.exists) {
-    //             const data =  doc.data();
-    //             users[id] = data;
-    //         }
-    //         else return null;
-    //     })
-    // });
-    console.log("project_users: ", users);
+
+    // console.log("project_users: ", users);
     return users;
 }

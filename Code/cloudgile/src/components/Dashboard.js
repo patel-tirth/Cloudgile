@@ -25,6 +25,9 @@ import { grey } from '@material-ui/core/colors';
 import { Tutorial } from './Tutorial';
 import { Fab, Tooltip } from '@material-ui/core';
 import { getUserForProject } from '../auth/getUserFromId';
+import { BoxLoading } from 'react-loadingg';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
+import { getReminders } from '../data/Reminders/getReminders';
 
 const drawerWidth = 240;
 
@@ -44,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     marginRight: 'auto',
-    // marginLeft: 'auto',
     textTransform: 'uppercase',
     ...theme.mixins.toolbarHeading
   },
@@ -96,7 +98,6 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    // height: '100vh',
     overflow: 'auto',
   },
   container: {
@@ -121,6 +122,8 @@ export default function Dashboard(props) {
   const [rows, setRows] = useState([])
   const [firstTime, setFirstTime] = useState(false)
   const current = getCurrentUser().id
+  const [loading, setLoading] = useState(true)
+  const [messages, setMessages] = useState([])
   
   useEffect(() => {
     loadData();
@@ -129,8 +132,10 @@ export default function Dashboard(props) {
   const loadData = async () => {
     const result = await getAllProjects(current);
     const firstUser = await getUserForProject([current])
+    const messages = await getReminders(getCurrentUser().id)
     setRows(result)
-    setFirstTime(false)
+    setFirstTime(firstUser[current].firstUser)
+    setLoading(false);
   };
 
   const handleDrawerOpen = () => {
@@ -141,7 +146,10 @@ export default function Dashboard(props) {
   };
   
   const refreshProjects = () => {
-    loadData()
+    setLoading(true)
+    setTimeout(() => {
+      loadData()
+    }, 1000);
   }
 
   return (    
@@ -156,7 +164,7 @@ export default function Dashboard(props) {
       </Tooltip>
 
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
       
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -173,7 +181,7 @@ export default function Dashboard(props) {
           <div>
             <SearchBar />
           </div>
-          <NotificationToggle/>
+          <NotificationToggle messages={messages}/>
           <IconButton>
             <PersonIcon style={{ color: grey[50] }}/>
           </IconButton>
@@ -202,17 +210,17 @@ export default function Dashboard(props) {
         <Divider />
 
       </Drawer>
-      <main className={classes.content}>
-        <section className="d-inline-flex w-100" style={{ padding: '15px'}}>
+      {loading ? <BoxLoading/> : <main className={classes.content}>
+        <section className="d-inline-flex w-100" style={{ padding: '15px', paddingTop: '25px'}}>
           <Typography variant="h4" color="secondary" noWrap align="left" style={{textTransform: 'uppercase', fontWeight: '500' }}>
-            Your Projects
+            <AccountTreeIcon style={{ margin: '0 10 2 0', fontSize: '30px' }} />Your Projects
           </Typography>
           <div style={{marginLeft: 'auto'}}></div>
         </section>
         <CollapsibleTable rows={rows}/>
        
         <NewProject loadData={() => loadData()} />
-      </main>
+      </main>}
     </div>
   );
 }

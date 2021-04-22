@@ -50,10 +50,10 @@ export default function Timeline({ project, users, refresh }) {
     const current = getCurrentUser().id;
 
     const reOpenThisIssue = (issue, key) => {
-        if (repoenIssue(project.id, issue, key)) {
-            refresh()
-            handleClose()
-        }
+        repoenIssue(project.id, issue, key).then(() => {
+                refresh()
+                handleClose()
+        })
     }
     const handleCellClick = (issue) => {
         setCurrentIssue(issue)
@@ -75,8 +75,8 @@ export default function Timeline({ project, users, refresh }) {
                 </TableHead>
                 <TableBody>
                     {users && project.timeline && project.timeline.map((issue, key) => {
-                        console.log(project.issues[issue])
-                        console.log(users[project.issues[issue].closedBy].name)
+                        // console.log(project.issues[issue])
+                        // console.log(users[project.issues[issue].closedBy].name)
                         return (
                             <>
                             <TableRow key={key} className={classes.root}>
@@ -87,7 +87,7 @@ export default function Timeline({ project, users, refresh }) {
                                     {project.issues[issue].priority}
                                 </TableCell>
                                 <TableCell onClick={() => handleCellClick(issue)} align="right" style={{}}>
-                                    {users[project.issues[issue].closedBy].name}
+                                    {users[project.issues[issue].closedBy] ? users[project.issues[issue].closedBy].name : <i>User Removed</i>}
                                 </TableCell>
                                 <TableCell onClick={() => handleCellClick(issue)} align="right" style={{}}>
                                     {project.issues[issue].closedOn}

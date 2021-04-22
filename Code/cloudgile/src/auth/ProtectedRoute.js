@@ -7,9 +7,6 @@ export const ProtectedRoute = ({ isAuthed, isLoading, ...props }) => {
   const inDebugMode = false;
   const inMaintainance = false;
   if (isLoading) {
-    // return <Backdrop open={isLoading}>
-    //   <CircularProgress color="inherit" />
-    // </Backdrop>;
     return <div><BoxLoading/></div>
   }
 

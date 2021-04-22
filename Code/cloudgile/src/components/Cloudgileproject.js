@@ -38,7 +38,10 @@ import { getUserForProject } from '../auth/getUserFromId';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import ProjectDetails from './ProjectDetails';
+import { BoxLoading } from 'react-loadingg';
+
 import firebase from 'firebase/app'
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     marginRight: 'auto',
-    // marginLeft: 'auto',
     textTransform: 'uppercase',
     ...theme.mixins.toolbarHeading
   },
@@ -109,7 +111,6 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    // height: '100vh',
     overflow: 'auto',
   },
   container: {
@@ -133,6 +134,7 @@ export default function CloudgileProject() {
   const [project, setProject] = useState(null)
   const {projectID} = useParams()
   const [users, setUsers] = useState(null)  
+  const [loading, setLoading] = useState(true)
   
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -143,13 +145,14 @@ export default function CloudgileProject() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const loadData = async () => {
-    let data = await getProject(getCurrentUser().id, projectID)
+    const data = await getProject(getCurrentUser().id, projectID)
     setProject(data)
     setUsers(null)
+    setLoading(false)
   }
 
   const loadUsers = async () => {
-    console.log(project.users)
+    // console.log(project.users)
     let data = await getUserForProject(project.users)
     setUsers(data)
   }
@@ -165,7 +168,10 @@ export default function CloudgileProject() {
   }, [project])
 
   const refreshProjects = async () => {
-    await loadData()
+    setLoading(true)
+    await setTimeout(async () => {
+      await loadData()
+    }, 1000);
   }
 
   return (
@@ -180,7 +186,7 @@ export default function CloudgileProject() {
             </Tooltip>
             <NewIssue refresh={refreshProjects}/>
             <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
               <Toolbar className={classes.toolbar}>
                 <IconButton
                   edge="start"
@@ -227,7 +233,7 @@ export default function CloudgileProject() {
               </List>
               <Divider />
             </Drawer>
-            <main className={classes.content}>
+            {loading ? <BoxLoading/> : <main className={classes.content}>
               <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                   <Grid item xs={9}>
@@ -251,7 +257,7 @@ export default function CloudgileProject() {
                   </Grid>
                 </Grid>
               </Container>
-            </main>
+            </main>}
           </div>
         : null
       }

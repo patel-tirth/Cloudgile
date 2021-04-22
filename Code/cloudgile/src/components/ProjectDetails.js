@@ -15,7 +15,6 @@ import { removeUserFromProject } from '../data/Projects';
 
 const useStyles = makeStyles({
   root: {
-    // minWidth: 275,
     height: 'auto'
   },
   bullet: {
@@ -63,7 +62,7 @@ export default function ProjectDetails(props) {
       setValidated(true)
     } else {
       e.preventDefault()
-      console.log(userId)
+      // console.log(userId)
       if (selectedOption === 1) {
         addUserToProject(project.id, userId)
         addProjectToUser(project.id ,userId)

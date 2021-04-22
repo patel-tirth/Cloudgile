@@ -39,10 +39,6 @@ import {
   MenuItem,
 } from "@material-ui/core";
 
-// function TabPanel(props)
-// {
-//   const classes = useStyles();
-//   const {children, value, index} = props;
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -110,7 +106,7 @@ export default function FullScreenDialog() {
       </ListItem>
 
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
+        <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon />

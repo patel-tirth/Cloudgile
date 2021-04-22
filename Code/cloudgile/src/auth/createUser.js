@@ -9,7 +9,7 @@ export const createUser = async (userid) => {
         if (snapshot.exists()) {
             return;
         } else {
-            snapshot.ref.update(getCurrentUser())
+            snapshot.ref.update({...getCurrentUser(), firstUser: true})
         }
     })
 

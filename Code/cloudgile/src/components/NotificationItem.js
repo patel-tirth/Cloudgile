@@ -7,7 +7,6 @@ import {
   Avatar,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-// import formatDistance from "date-fns/formatDistance";
 
 function NotificationItem(props) {
   const { message, divider } = props;
@@ -30,8 +29,7 @@ function NotificationItem(props) {
         )}
       </ListItemAvatar>
       <ListItemText
-        primary={message.text}
-        // secondary={`${formatDistance(message.date * 1000, new Date())} ago`}
+        primary={message}
       />
     </ListItem>
   );

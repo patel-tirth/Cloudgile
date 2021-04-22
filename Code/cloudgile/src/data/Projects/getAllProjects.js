@@ -16,14 +16,17 @@ export const getAllProjects = async(user_id) => {
     })
  
     await firebase.firestore().collection('projects').get().then((snapshot) => {
-        snapshot.forEach(doc => {
+        snapshot.forEach(async (doc) => {
             if (project_ids.includes(doc.id)) {
                 const data = doc.data()
+                await firebase.database().ref('issues/' + doc.id).once('value', snapshot=> {
+                    const issueData = snapshot.val();
+                    data['issues'] = issueData;
+                })
                 project_array.push(data);
             }
         }) 
     })
 
-    console.log(project_array)
     return project_array;
 }

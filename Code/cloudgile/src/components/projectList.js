@@ -81,7 +81,7 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {false && row.backlog && row.backlog.map((issue) => (
+                  {row.backlog && row.backlog.map((issue) => (
                     <TableRow>
                       <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
                       <TableCell>{row.issues[issue].createdOn}</TableCell>
@@ -89,7 +89,7 @@ function Row(props) {
                       <TableCell>{row.issues[issue].completeBy}</TableCell>
                     </TableRow>
                   ))}
-                  {false && row.timeline && row.timeline.map((issue) => (
+                  {row.timeline && row.timeline.map((issue) => (
                     <TableRow>
                       <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
                       <TableCell>{row.issues[issue].createdOn}</TableCell>

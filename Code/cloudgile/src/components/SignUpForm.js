@@ -51,9 +51,6 @@ function SignUpForm() {
             setErrorMessage(e.message);
         }
     }
-    // const goToTutorial = () => {
-    //     history.push("/tutorial");
-    // }
  
     const onFormSubmit = e => {
         setErrorMessage(null);
@@ -84,7 +81,6 @@ function SignUpForm() {
                                             required
                                             fullWidth
                                             placeholder="First Name"
-                                            // margin="normal"
                                             name="firstName"
                                             type="text"
                                             value={firstName || ""}
@@ -96,7 +92,6 @@ function SignUpForm() {
                                         required
                                         fullWidth
                                         placeholder="Last Name"
-                                        // margin="normal"
                                         name="lastName"
                                         type="text"
                                         value={lastName || ""}
@@ -108,7 +103,6 @@ function SignUpForm() {
                                         required
                                         fullWidth
                                         placeholder="Email Address"
-                                        // margin="normal"
                                         name="SignUpMail"
                                         type="email"
                                         value={loginEmail || ""}
@@ -120,7 +114,6 @@ function SignUpForm() {
                                         required
                                         fullWidth
                                         placeholder="New Password"
-                                        // margin="normal"
                                         name="PassOne"
                                         type="password"
                                         value={passOne || ""}
@@ -132,7 +125,6 @@ function SignUpForm() {
                                         required
                                         fullWidth
                                         placeholder="Confirm Password"
-                                        // margin="normal"
                                         name="PassTwo"
                                         type="password"
                                         value={passTwo || ""}

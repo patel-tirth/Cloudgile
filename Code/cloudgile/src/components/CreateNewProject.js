@@ -16,14 +16,12 @@ export default function NewProject(props) {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
-    // const [lead, setLead] = useState('')
     const [category, setCategory] = useState('')
 
     const handleClose = () => {
       setName('')
       setDescription('')
       setType('')
-      // setLead('')
       setCategory('')
       setShow(false)
     };
