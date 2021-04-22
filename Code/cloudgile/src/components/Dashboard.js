@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     marginRight: 'auto',
+    marginLeft: 'auto',
     textTransform: 'uppercase',
     ...theme.mixins.toolbarHeading
   },

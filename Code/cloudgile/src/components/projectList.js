@@ -49,9 +49,11 @@ function Row(props) {
         <TableCell align="right" onClick={handleCellClick}>{row.category}</TableCell>
         <TableCell align="right" onClick={handleCellClick}>{row.id}</TableCell>
         <TableCell align="right">
-          <Tooltip title="Copy ID to clipboard">
-            <AssignmentIcon style={{ color: 'black' }}/>
-          </Tooltip>
+          <IconButton onClick={navigator.clipboard.writeText(row.id)}>
+            <Tooltip title="Copy ID to clipboard">
+              <AssignmentIcon style={{ color: 'black' }}/>
+            </Tooltip>
+          </IconButton>
           { <IconButton aria-label="expand row" size="small" style={{marginLeft: 10}} onClick={() => setOpen(!open)}>
             {open ? 
             <Tooltip title="Shrink">
