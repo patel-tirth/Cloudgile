@@ -18,14 +18,14 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Redirect, useParams } from 'react-router';
-
+import ChatIcon from '@material-ui/icons/Chat';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { MainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
 import { SearchBar } from './SearchBar';
 import '../App.css';
-import { getProject } from '../data/Projects/getProject';
+import { getProject } from '../Data/Projects/getProject';
 import { getCurrentUser } from '../auth';
 import NotificationToggle from './NotificationToggle';
 import PersonIcon from '@material-ui/icons/Person';
@@ -42,6 +42,9 @@ import { BoxLoading } from 'react-loadingg';
 
 import firebase from 'firebase/app'
 
+import { Link } from 'react-router-dom';
+import ChatDrawer from './ChatDrawer'
+import UserIconToggle from './UserIconToggle';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -179,6 +182,7 @@ export default function CloudgileProject() {
       {project === false ? <Redirect to="/dashboard" /> :
         project && users ? 
           <div className={classes.root}>
+            <ChatDrawer/>
             <Tooltip arrow title="Refresh" placement="left">
               <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={() => refreshProjects()}>
                 <RefreshIcon />
@@ -206,7 +210,8 @@ export default function CloudgileProject() {
                 </div>
                 <NotificationToggle/>
                 <IconButton>
-                  <PersonIcon style={{ color: grey[50] }} />
+                  {/* <PersonIcon style={{ color: grey[50] }} /> */}
+                  <UserIconToggle/>
                 </IconButton>
               </Toolbar>
             </AppBar>
@@ -229,7 +234,7 @@ export default function CloudgileProject() {
               </div>
               <Divider />
               <List>
-                <MainListItems projectID={projectID}/>
+                <MainListItems/>
               </List>
               <Divider />
             </Drawer>

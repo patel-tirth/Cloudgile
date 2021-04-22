@@ -19,7 +19,7 @@ import { MainListItems } from './listItems';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { SearchBar } from './SearchBar';
 import { useEffect } from 'react';
-import { getAllProjects } from '../data/Projects';
+import { getAllProjects } from '../Data/Projects';
 import PersonIcon from '@material-ui/icons/Person';
 import { grey } from '@material-ui/core/colors';
 import { Tutorial } from './Tutorial';
@@ -29,6 +29,7 @@ import { BoxLoading } from 'react-loadingg';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import { getReminders } from '../data/Reminders/getReminders';
 
+import UserIconToggle from './UserIconToggle';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -183,7 +184,7 @@ export default function Dashboard(props) {
           </div>
           <NotificationToggle messages={messages}/>
           <IconButton>
-            <PersonIcon style={{ color: grey[50] }}/>
+            <UserIconToggle/>
           </IconButton>
         </Toolbar>
       </AppBar>
