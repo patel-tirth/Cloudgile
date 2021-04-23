@@ -9,5 +9,7 @@ export const getUserForProject = async (user_list) => {
     }, error => {
         throw new Error(error.message)
     })
+
+    // console.log("project_users: ", users);
     return users;
 }

@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 
 export const signUp = async (email, password, displayName) => {
     try {
-        const result = await firebase.auth().createUserWithEmailAndPassword(email, password).then(user => {
+        await firebase.auth().createUserWithEmailAndPassword(email, password).then(user => {
             user.updateProfile({
                 displayName: displayName
 

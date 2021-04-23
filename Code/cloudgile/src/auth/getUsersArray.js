@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import 'firebase/database'
 
 export const getUsersArray = async () => {
     let users = [];
@@ -8,5 +9,6 @@ export const getUsersArray = async () => {
     }, error => {
         throw new Error(error.message)
     })
+    // console.log(users);
     return users;
 }

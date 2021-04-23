@@ -13,13 +13,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationToggle from './NotificationToggle';
 import { MainListItems } from './listItems';
-import { SearchBar } from './SearchBar';
-import PersonIcon from '@material-ui/icons/Person';
-import { grey } from '@material-ui/core/colors';
 import { ChatRoom } from './ChatRoom';
 import { Redirect, useParams } from 'react-router';
 import { getProject } from '../data/Projects';
 import { getCurrentUser } from '../auth';
+import UserIconToggle from './UserIconToggle';
 
 const drawerWidth = 240;
 
@@ -39,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     },
     toolbarTitle: {
         marginRight: 'auto',
-        // marginLeft: 'auto',
         textTransform: 'uppercase',
         ...theme.mixins.toolbarHeading
     },
@@ -91,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
-        // height: '100vh',
         overflow: 'auto',
     },
     container: {
@@ -143,7 +139,7 @@ export default function NewChatRoom() {
             { project === false ? <Redirect to="/dashboard"/> :
             <div className={classes.root}>
             <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
                         edge="start"
@@ -157,11 +153,11 @@ export default function NewChatRoom() {
                         DASHBOARD
                     </Typography>
                     <div>
-                        <SearchBar />
                     </div>
                     <NotificationToggle />
                     <IconButton>
-                        <PersonIcon style={{ color: grey[50] }} />
+                        {/* <PersonIcon style={{ color: grey[50] }} /> */}
+                        <UserIconToggle/>
                     </IconButton>
                 </Toolbar>
             </AppBar>

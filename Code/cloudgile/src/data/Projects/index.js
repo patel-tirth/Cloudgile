@@ -1,3 +1,4 @@
+export { addProjectToUser } from "./addProjectToUser";
 export { addUserToProject } from "./addUserToProject";
 export { getAllProjects } from "./getAllProjects";
 export { getProject } from "./getProject";

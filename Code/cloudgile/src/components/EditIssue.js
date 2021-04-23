@@ -24,8 +24,7 @@ export const EditIssue = (props) => {
             e.preventDefault()
             editIssueDetails(props.project.id, { id: issueId, title: name, assignedTo, completeBy, description, priority })
             props.close()
-            props.refresh()
-        }
+            props.refresh()}
     }
 
     return (
