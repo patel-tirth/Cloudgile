@@ -50,9 +50,10 @@ export default function Timeline({ project, users, refresh }) {
     const current = getCurrentUser().id;
 
     const reOpenThisIssue = (issue, key) => {
-        repoenIssue(project.id, issue, key)
-        refresh()
-        handleClose()
+        repoenIssue(project.id, issue, key).then(() => {
+                refresh()
+                handleClose()
+        })
     }
     const handleCellClick = (issue) => {
         setCurrentIssue(issue)
@@ -61,7 +62,7 @@ export default function Timeline({ project, users, refresh }) {
 
     return (
         <>
-        <TableContainer component={Paper}>
+        <TableContainer id="backlogTable" style={{ maxHeight: '250px' }} component={Paper}>
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>
@@ -73,18 +74,19 @@ export default function Timeline({ project, users, refresh }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {project.timeline && project.timeline.map((issue, key) => {
+                    {users && project.timeline && project.timeline.map((issue, key) => {
+                        // console.log(project.issues[issue])
+                        // console.log(users[project.issues[issue].closedBy].name)
                         return (
-                            <>
                             <TableRow key={key} className={classes.root}>
                                 <TableCell onClick={() => handleCellClick(issue)} component="th" scope="row">
                                     {project.issues[issue].title}
                                 </TableCell>
-                                <TableCell onClick={() => handleCellClick(issue)} align="center" style={{ backgroundColor: getColor(project.issues[issue].priority), padding: 1, textTransform: 'uppercase' }}>
-                                    {project.issues[issue].priority}
+                                    <TableCell onClick={() => handleCellClick(issue)} align="center" style={{ backgroundColor: getColor(project.issues[issue].priority), color: 'darkblue', padding: 1, textTransform: 'uppercase' }}>
+                                    <b>{project.issues[issue].priority}</b>
                                 </TableCell>
                                 <TableCell onClick={() => handleCellClick(issue)} align="right" style={{}}>
-                                    {users[project.issues[issue].closedBy].name}
+                                    {users[project.issues[issue].closedBy] ? users[project.issues[issue].closedBy].name : <i>User Removed</i>}
                                 </TableCell>
                                 <TableCell onClick={() => handleCellClick(issue)} align="right" style={{}}>
                                     {project.issues[issue].closedOn}
@@ -96,31 +98,29 @@ export default function Timeline({ project, users, refresh }) {
                                         </Tooltip>
                                     </IconButton>}
                                 </TableCell>
+
+                                    <Modal
+                                        key={'modal'.concat(key.toString())}
+                                        show={show}
+                                        onHide={handleClose}
+                                        backdrop="static"
+                                        keyboard={false}
+                                        centered
+                                    >
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Re-open Issue</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            Are you sure?
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={handleClose}>
+                                                No
+                                            </Button>
+                                            <Button onClick={() => reOpenThisIssue(issue, key)}>Yes</Button>
+                                        </Modal.Footer>
+                                    </Modal>
                             </TableRow>
-
-                                <Modal
-                                    key={'modal'.concat(key.toString())}
-                                    show={show}
-                                    onHide={handleClose}
-                                    backdrop="static"
-                                    keyboard={false}
-                                    centered
-                                >
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Re-open Issue</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        Are you sure?
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleClose}>
-                                            No
-                                        </Button>
-                                        <Button variant="primary" onClick={() => reOpenThisIssue(issue, key)}>Yes</Button>
-                                    </Modal.Footer>
-                                </Modal>
-
-                            </>
                         );
                     })}
                 </TableBody>

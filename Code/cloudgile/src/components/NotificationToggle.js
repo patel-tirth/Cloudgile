@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef, useCallback } from "react";
+import React, { Fragment, useState, useRef, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { grey } from '@material-ui/core/colors';
 import {
@@ -13,6 +13,12 @@ import {
   Badge,
 } from "@material-ui/core";
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { getCurrentUser } from "../auth";
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import NotificationItem from "./NotificationItem";
+import firebase from 'firebase/app'
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 const styles = (theme) => ({
   tabContainer: {
@@ -41,6 +47,8 @@ function NotificationToggle(props) {
   const [messages, setMessages] = useState([])
   const anchorEl = useRef();
   const [isOpen, setIsOpen] = useState(false);
+  const userRef = firebase.firestore().collection('users').doc(getCurrentUser().id);
+  const [userData] = useDocumentData(userRef)
 
   const handleClick = useCallback(() => {
     setIsOpen(!isOpen);
@@ -50,9 +58,16 @@ function NotificationToggle(props) {
     setIsOpen(false);
   }, [setIsOpen]);
 
+  useEffect(() => {
+    if (typeof userData !== "undefined") {
+      userData.reminders && setMessages(userData.reminders)
+    }
+  }, [userData])
+
+
   const id = isOpen ? "scroll-playground" : null;
   return (
-    <Fragment>
+    messages && <Fragment>
       <IconButton
         onClick={handleClick}
         buttonRef={anchorEl}
@@ -90,7 +105,7 @@ function NotificationToggle(props) {
             {/* uncomment below when an array of messages is passed as props. 
             If array is not passed, then the app will crash because messages.length will be meaningless. 
              */}
-          {/* {messages.length === 0 ? (
+          {messages.length === 0 ? (
             <ListItem>
               <ListItemText>
                 You haven&apos;t received any messages yet.
@@ -98,13 +113,13 @@ function NotificationToggle(props) {
             </ListItem>
           ) : (
             messages.map((element, index) => (
-              <MessageListItem
+              <NotificationItem
                 key={index}
                 message={element}
                 divider={index !== messages.length - 1}
               />
             ))
-          )} */}
+          )}
           {/* {(messages === null || messages.length === 0) ? null:null} */}
         </List>
       </Popover>
@@ -114,7 +129,6 @@ function NotificationToggle(props) {
 
 NotificationToggle.propTypes = {
   classes: PropTypes.object.isRequired,
-  // messages: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(NotificationToggle);

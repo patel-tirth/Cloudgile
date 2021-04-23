@@ -1,24 +1,32 @@
 import firebase from 'firebase/app'
-import 'firebase/database'
+import 'firebase/firestore'
 
 export const getAllProjects = async(user_id) => {
-    try {
-        let project_ids = [];
-        let project_array = [];
-        await firebase.database().ref('users/' + user_id + '/projects/').once('value', snapshot => {
-            if (snapshot.exists())  {
-                project_ids = snapshot.val();
+    let project_array = [];
+    let project_ids = [];
+
+    await firebase.firestore().collection('users').doc(user_id).get().then((doc) => {
+        if (doc.exists) {
+            if (doc.data().numProjects === 0) {}
+            else {
+                project_ids = doc.data().projects;
+                return;
             }
-        }).then(async () => {
-            await firebase.database().ref('projects/').once('value', snapshot => {
-                project_ids.forEach(id => {
-                    let data = snapshot.child(id).val()
-                    project_array.push(data)
+        }
+    })
+ 
+    await firebase.firestore().collection('projects').get().then((snapshot) => {
+        snapshot.forEach(async (doc) => {
+            if (project_ids.includes(doc.id)) {
+                const data = doc.data()
+                await firebase.database().ref('issues/' + doc.id).once('value', snapshot=> {
+                    const issueData = snapshot.val();
+                    data['issues'] = issueData;
                 })
-            })
-        })
-        return project_array 
-    } catch (e) {
-        throw new Error(e.message);
-    }
+                project_array.push(data);
+            }
+        }) 
+    })
+
+    return project_array;
 }

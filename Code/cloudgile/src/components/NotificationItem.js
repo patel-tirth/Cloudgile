@@ -7,11 +7,16 @@ import {
   Avatar,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-// import formatDistance from "date-fns/formatDistance";
-
+import ClearIcon from '@material-ui/icons/Clear';
+import IconButton from '@material-ui/core/IconButton';
+import {removeReminders} from '../data/Reminders/removeReminders'
 function NotificationItem(props) {
   const { message, divider } = props;
   const [hasErrorOccurred, setHasErrorOccurred] = useState(false);
+
+  const remove = () => {
+    removeReminders(message);
+  }
 
   const handleError = useCallback(() => {
     setHasErrorOccurred(true);
@@ -30,15 +35,17 @@ function NotificationItem(props) {
         )}
       </ListItemAvatar>
       <ListItemText
-        primary={message.text}
-        // secondary={`${formatDistance(message.date * 1000, new Date())} ago`}
+        primary={message}
       />
+    <IconButton onClick={remove}>
+      <ClearIcon/>
+    </IconButton>
     </ListItem>
   );
 }
 
 NotificationItem.propTypes = {
-  message: PropTypes.object.isRequired,
+  message: PropTypes.string.isRequired,
   divider: PropTypes.bool,
 };
 
