@@ -18,18 +18,14 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Redirect, useParams } from 'react-router';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { MainListItems } from './ProjectDashboardListItems';
 import Title from './Title';
-import { SearchBar } from './SearchBar';
 import '../App.css';
 import { getProject } from '../data/Projects/getProject';
 import { getCurrentUser } from '../auth';
 import NotificationToggle from './NotificationToggle';
-import PersonIcon from '@material-ui/icons/Person';
-import { grey } from '@material-ui/core/colors';
 import NewIssue from './CreateNewIssue';
 import { Tooltip } from '@material-ui/core';
 import { Fab } from '@material-ui/core';
@@ -38,7 +34,11 @@ import { getUserForProject } from '../auth/getUserFromId';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import ProjectDetails from './ProjectDetails';
-
+import { BoxLoading } from 'react-loadingg';
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import ChatDrawer from './ChatDrawer'
+import UserIconToggle from './UserIconToggle';
+import { Sprint } from './Sprint';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     marginRight: 'auto',
-    // marginLeft: 'auto',
     textTransform: 'uppercase',
     ...theme.mixins.toolbarHeading
   },
@@ -109,7 +108,6 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    // height: '100vh',
     overflow: 'auto',
   },
   container: {
@@ -132,7 +130,8 @@ export default function CloudgileProject() {
   const [open, setOpen] = useState(false);
   const [project, setProject] = useState(null)
   const {projectID} = useParams()
-  const [users, setUsers] = useState(null)
+  const [users, setUsers] = useState(null)  
+  const [loading, setLoading] = useState(true)
   
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -143,12 +142,14 @@ export default function CloudgileProject() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const loadData = async () => {
-    let data = await getProject(getCurrentUser().id, projectID)
+    const data = await getProject(getCurrentUser().id, projectID)
     setProject(data)
     setUsers(null)
+    setLoading(false)
   }
 
   const loadUsers = async () => {
+    // console.log(project.users)
     let data = await getUserForProject(project.users)
     setUsers(data)
   }
@@ -164,7 +165,10 @@ export default function CloudgileProject() {
   }, [project])
 
   const refreshProjects = async () => {
-    await loadData()
+    setLoading(true)
+    await setTimeout(async () => {
+      await loadData()
+    }, 1000);
   }
 
   return (
@@ -172,6 +176,7 @@ export default function CloudgileProject() {
       {project === false ? <Redirect to="/dashboard" /> :
         project && users ? 
           <div className={classes.root}>
+            <ChatDrawer/>
             <Tooltip arrow title="Refresh" placement="left">
               <Fab color="secondary" style={{ position: 'absolute', bottom: 90, right: 20 }} onClick={() => refreshProjects()}>
                 <RefreshIcon />
@@ -179,7 +184,7 @@ export default function CloudgileProject() {
             </Tooltip>
             <NewIssue refresh={refreshProjects}/>
             <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
               <Toolbar className={classes.toolbar}>
                 <IconButton
                   edge="start"
@@ -195,11 +200,11 @@ export default function CloudgileProject() {
                   {project.name}
                 </Typography>
                 <div>
-                  <SearchBar />
                 </div>
                 <NotificationToggle/>
                 <IconButton>
-                  <PersonIcon style={{ color: grey[50] }} />
+                  {/* <PersonIcon style={{ color: grey[50] }} /> */}
+                  <UserIconToggle/>
                 </IconButton>
               </Toolbar>
             </AppBar>
@@ -222,11 +227,11 @@ export default function CloudgileProject() {
               </div>
               <Divider />
               <List>
-                <MainListItems projectID={projectID}/>
+                <MainListItems/>
               </List>
               <Divider />
             </Drawer>
-            <main className={classes.content}>
+            {loading ? <BoxLoading/> : <main className={classes.content}>
               <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                   <Grid item xs={9}>
@@ -246,11 +251,17 @@ export default function CloudgileProject() {
                     </Grid>
                   </Grid>
                   <Grid item xs={3}>
-                    <ProjectDetails project={project} users={users} refresh={refreshProjects}/>
+                    <Paper>
+                      <ProjectDetails project={project} users={users} refresh={refreshProjects} />
+                    </Paper>
+                    <Paper className={fixedHeightPaper} style={{marginTop: '20px'}}>
+                      <Title align="left"><DirectionsRunIcon style={{ margin: '0 5 2 2' }} />Sprint</Title>
+                      <Sprint project={project} refresh={refreshProjects} />
+                    </Paper>
                   </Grid>
                 </Grid>
               </Container>
-            </main>
+            </main>}
           </div>
         : null
       }

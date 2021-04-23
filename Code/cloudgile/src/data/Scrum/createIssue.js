@@ -1,23 +1,20 @@
 import firebase from 'firebase/app'
+import 'firebase/firestore'
 import 'firebase/database'
+import {SendReminders} from '../Reminders/SendReminders'
 
 export const createIssue = async (project_id, issue, issue_id) => {
-    await firebase.database().ref('projects/' + project_id).once('value', snapshot => {
-        const numIssues = snapshot.child('numIssues').val()
-        snapshot.ref.child('issues/' + issue_id).set(issue)
-        snapshot.ref.child('numIssues').set(numIssues + 1)
+    let data
+    await firebase.database().ref('issues/' + project_id + '/' + issue_id).set(issue);
 
-        const numBacklog = snapshot.child('numBacklog').val()
-        if (numBacklog === 0) {
-            snapshot.ref.child('backlog').set([issue_id])
-            snapshot.ref.child('numBacklog').set(numBacklog + 1)
-        } else {
-            let backlogs = snapshot.child('backlog').val()
-            backlogs.push(issue_id)
-            snapshot.ref.child('backlog').set(backlogs)
-            snapshot.ref.child('numBacklog').set(numBacklog + 1)
-        }
-    }, (error) => {
-        throw new Error(error)
-    }) ;
+    const projectRef = firebase.firestore().collection('projects').doc(project_id);
+
+    await projectRef.update({
+        numBacklog: firebase.firestore.FieldValue.increment(1),
+        numIssues: firebase.firestore.FieldValue.increment(1),
+        backlog: firebase.firestore.FieldValue.arrayUnion(issue_id)
+    })
+
+    await projectRef.get().then((doc) => { data = doc.data() })
+    await SendReminders(`Issue "${issue.title}" have been assigned to you from project "${data.name}"`, [issue.assignedTo])
 }

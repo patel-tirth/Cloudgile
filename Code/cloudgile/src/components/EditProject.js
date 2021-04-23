@@ -24,8 +24,8 @@ export const EditProject = (props) => {
         } else {
             e.preventDefault()
             editProjectDetails(project.id, { id: project.id, name, category, type, createdOn, description, leadId: lead, leadName: props.users[lead].name })
-            props.close()
-            props.refresh()
+                props.close()
+                props.refresh()
         }
     }
 

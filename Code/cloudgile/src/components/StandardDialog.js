@@ -17,21 +17,12 @@ import EmailIcon from '@material-ui/icons/Email';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-    Close as CloseIcon,
     AccountCircle as AccountCircleIcon,
-    Palette as PaletteIcon,
-    Link as LinkIcon,
-    Security as SecurityIcon,
-  } from "@material-ui/icons";
-  import {
+} from "@material-ui/icons";
+import {
     Dialog,
-    Typography,
     IconButton,
-    Tabs,
-    Tab,
-    Menu,
-    MenuItem,
-  } from "@material-ui/core";
+} from "@material-ui/core";
 
   const useStyles = makeStyles((theme) => ({
     appBar: {

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,19 +39,21 @@ function Row(props) {
     e.preventDefault()
     history.push(`/projects/${row.id}`);
   }
-  
+
   return (
     <Fragment>
-      <TableRow className={classes.root} button>
+      <TableRow className={classes.root} >
         <TableCell component="th" scope="row" onClick={handleCellClick}>{row.name}</TableCell>
         <TableCell align="right" onClick={handleCellClick}>{row.type}</TableCell>
         <TableCell align="right" onClick={handleCellClick}>{row.leadName}</TableCell>
         <TableCell align="right" onClick={handleCellClick}>{row.category}</TableCell>
         <TableCell align="right" onClick={handleCellClick}>{row.id}</TableCell>
         <TableCell align="right">
-          <Tooltip title="Copy ID to clipboard">
-            <AssignmentIcon style={{ color: 'black' }}/>
-          </Tooltip>
+          <IconButton onClick={navigator.clipboard.writeText(row.id)}>
+            <Tooltip title="Copy ID to clipboard">
+              <AssignmentIcon style={{ color: 'black' }}/>
+            </Tooltip>
+          </IconButton>
           { <IconButton aria-label="expand row" size="small" style={{marginLeft: 10}} onClick={() => setOpen(!open)}>
             {open ? 
             <Tooltip title="Shrink">
@@ -81,16 +83,16 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.backlog && row.backlog.map((issue) => (
-                    <TableRow>
+                  {row.backlog && row.backlog.map((issue, key) => (
+                    <TableRow key={key}>
                       <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
                       <TableCell>{row.issues[issue].createdOn}</TableCell>
                       <TableCell>{row.issues[issue].updatedOn}</TableCell>
                       <TableCell>{row.issues[issue].completeBy}</TableCell>
                     </TableRow>
                   ))}
-                  {row.timeline && row.timeline.map((issue) => (
-                    <TableRow>
+                  {row.timeline && row.timeline.map((issue, key) => (
+                    <TableRow key={key}>
                       <TableCell component="th" scope="row">{row.issues[issue].title}</TableCell>
                       <TableCell>{row.issues[issue].createdOn}</TableCell>
                       <TableCell>{row.issues[issue].updatedOn}</TableCell>
@@ -110,16 +112,8 @@ function Row(props) {
 Row.propTypes = {
   row: PropTypes.shape({
     type: PropTypes.string.isRequired,
-    lead: PropTypes.string.isRequired,
+    lead: PropTypes.string,
     category: PropTypes.string.isRequired,
-    issues: PropTypes.arrayOf(
-      PropTypes.shape({
-        issueName: PropTypes.string.isRequired,
-        createdOn: PropTypes.string.isRequired,
-        updatedOn: PropTypes.string.isRequired,
-        updatedBy: PropTypes.string.isRequired
-      }),
-    ),
     name: PropTypes.string.isRequired,
     URL: PropTypes.string,
   }).isRequired,

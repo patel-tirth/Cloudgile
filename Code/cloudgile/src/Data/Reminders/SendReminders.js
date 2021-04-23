@@ -1,15 +1,14 @@
-import React from 'react'
 import firebase from 'firebase/app'
-import 'firebase/database'
+import 'firebase/firestore'
 
 export const SendReminders = async (reminder, users) => {
-    try {
-        await firebase.database().ref('/users/').once('value', snapshot => {
-            users.array.forEach(user => {
-                snapshot.child(user + '/reminders/').push(reminder)
-            });
+    // console.log(reminder, users)
+    await users.forEach(async user => {
+        const userRef = firebase.firestore().collection('users').doc(user);
+        await userRef.update({
+            reminders: firebase.firestore.FieldValue.arrayUnion(reminder)
+        }).then(() => {
+            // console.log('updated')
         })
-    } catch (e) {
-        throw new Error (e.message);
-    }
+    });
 }
