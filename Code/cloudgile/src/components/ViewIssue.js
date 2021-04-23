@@ -20,7 +20,7 @@ export const ViewIssue = (props) => {
                 {issue.open ? 
                 <>
                     <Typography gutterBottom>Complete By: {issue.completeBy}</Typography>
-                    <Typography gutterBottom>Created By: {props.users[issue.createdBy].name} ({props.users[issue.createdBy].email})</Typography>
+                    <Typography gutterBottom>Created By: {props.users[issue.createdBy] ? `${props.users[issue.createdBy].name} (${props.users[issue.createdBy].email})` : 'User Removed'}</Typography>
                     <Typography gutterBottom>Priority: {issue.priority}</Typography>
                     {issue.reOpenedBy && <Typography gutterBottom>Re-opened By: {props.users[issue.reOpenedBy].name} ({props.users[issue.reOpenedBy].email})</Typography>}
                 </>

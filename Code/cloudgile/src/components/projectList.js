@@ -49,7 +49,11 @@ function Row(props) {
         <TableCell align="right" onClick={handleCellClick}>{row.category}</TableCell>
         <TableCell align="right" onClick={handleCellClick}>{row.id}</TableCell>
         <TableCell align="right">
-          <IconButton onClick={navigator.clipboard.writeText(row.id)}>
+          <IconButton onClick={() => navigator.clipboard.writeText(row.id).then(() => {
+            console.log('success');
+          }, (error) => {
+            console.log('failed')
+          })}>
             <Tooltip title="Copy ID to clipboard">
               <AssignmentIcon style={{ color: 'black' }}/>
             </Tooltip>
